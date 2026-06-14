@@ -248,7 +248,7 @@
 
         dataMeta.textContent = `已收錄 ${recipes.length} 款精油膏、${allIngredients.length} 筆原料。`;
         renderFormulaList();
-        showStatus("success", "");
+        hideStatus();
         renderEmpty(`可以搜尋：${recipes.slice(0, 4).map(r => r.name).join("、")}，或輸入任一成分名稱。`);
       } catch (error) {
         dataMeta.textContent = "配方資料尚未載入。";
@@ -295,7 +295,7 @@
     function clearSearch() {
       searchInput.value = "";
       results.innerHTML = "";
-      showStatus("success", "已清除搜尋結果。");
+      hideStatus();
       renderEmpty("請輸入精油膏名稱或成分名稱查詢。");
     }
 
@@ -465,6 +465,11 @@
     function showStatus(type, message) {
       statusBox.className = `status show ${type}`;
       statusBox.innerHTML = message;
+    }
+
+    function hideStatus() {
+      statusBox.className = "status";
+      statusBox.innerHTML = "";
     }
 
     function cleanCell(value) {
