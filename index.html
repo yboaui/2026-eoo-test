@@ -147,7 +147,7 @@
     <section class="hero">
       <div class="eyebrow">🌿 WITCH BALM FORMULA BOOK</div>
       <h1>女巫精油膏配方書</h1>
-      <p>輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。配方資料來自同資料夾的 CSV，之後只要更新 CSV，不需要修改 index.html。</p>
+      <p>輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。</p>
     </section>
 
     <section class="panel">
@@ -157,7 +157,7 @@
         <button id="searchBtn" class="primary">搜尋</button>
         <button id="clearBtn" class="secondary">清除</button>
       </div>
-      <div class="meta" id="dataMeta">正在讀取配方資料...</div>
+      <div class="meta" id="dataMeta">配方資料載入中...</div>
       <div class="status" id="statusBox"></div>
     </section>
 
@@ -165,9 +165,6 @@
     <section id="results" class="grid"></section>
     <section id="emptyState" class="empty">配方讀取完成後，可以直接輸入「精油膏名稱」或「成分名稱」查詢。</section>
 
-    <p class="small-note">
-      GitHub Pages 放置方式：請把這個檔案命名為 <code>index.html</code>，並把配方檔命名為 <code>Potions-Formula.csv</code>，兩個檔案放在同一個資料夾。之後只要更新 CSV，網頁會自動讀取新的配方內容。
-    </p>
   </main>
 
   <script>
@@ -210,13 +207,13 @@
 
         if (!recipes.length) throw new Error("CSV 內沒有讀到任何精油膏配方。請確認第 1 列是否有配方名稱。 ");
 
-        dataMeta.textContent = `已讀取 ${recipes.length} 款精油膏、${allIngredients.length} 筆原料。資料來源：${CSV_PATH}`;
-        showStatus("success", "配方資料已載入完成，可以開始搜尋。");
-        renderEmpty(`可以搜尋：${recipes.slice(0, 4).map(r => r.name).join("、")}，或輸入任一成分名稱。`);
+        dataMeta.textContent = `已載入 ${recipes.length} 款精油膏、${allIngredients.length} 筆原料`;
+        hideStatus();
+        renderEmpty("請輸入精油膏名稱或成分名稱開始搜尋。");
       } catch (error) {
         dataMeta.textContent = "配方資料尚未載入。";
-        showStatus("error", `無法讀取 CSV：${error.message}。請確認 index.html 與 Potions-Formula.csv 是否放在 GitHub 同一個資料夾。`);
-        renderEmpty("目前無法搜尋，因為配方 CSV 尚未成功讀取。若你是在電腦直接雙擊 HTML 開啟，fetch 可能會被瀏覽器擋下；放到 GitHub Pages 後即可正常讀取同資料夾 CSV。");
+        showStatus("error", "配方資料讀取失敗，請稍後再試或聯繫管理者。");
+        renderEmpty("目前無法搜尋，因為配方資料尚未成功讀取。");
       }
     }
 
