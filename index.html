@@ -151,24 +151,30 @@
       font-size: 22px;
     }
     .formula-list ul {
-      list-style: none;
-      padding: 0;
+      list-style: disc;
+      padding-left: 24px;
       margin: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    }
+    .formula-list li {
+      margin: 10px 0;
+      color: #f3d88f;
+      line-height: 1.7;
     }
     .formula-list button {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(230,207,145,.12);
-      border: 1px solid rgba(230,207,145,.26);
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       color: #f3d88f;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
+      text-align: left;
+      cursor: pointer;
     }
     .formula-list button:hover {
-      background: rgba(230,207,145,.2);
+      color: #fff2c2;
+      text-decoration: underline;
+      background: transparent;
     }
     mark { background: rgba(230,207,145,.28); color: inherit; border-radius: 5px; padding: 0 2px; }
     .small-note { color: #a99e91; font-size: 13px; line-height: 1.7; margin-top: 20px; }
