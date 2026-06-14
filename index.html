@@ -4,935 +4,422 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>女巫精油膏配方書</title>
-
   <style>
-    /* =========================
-      基礎設定
-    ========================= */
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #100d17;
+      --card: rgba(255,255,255,.08);
+      --card-strong: rgba(255,255,255,.12);
+      --line: rgba(235, 217, 168, .2);
+      --gold: #e6cf91;
+      --green: #9cc98f;
+      --text: #fff8eb;
+      --muted: #cfc3b2;
+      --danger: #ffd0d0;
+      --danger-bg: rgba(198, 77, 77, .16);
     }
-
     body {
       margin: 0;
       font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(186, 143, 255, 0.18), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(88, 154, 117, 0.18), transparent 36%),
-        #12101a;
-      color: #f6f1e8;
+        radial-gradient(circle at 12% 0%, rgba(133, 96, 196, .26), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(139, 184, 117, .18), transparent 28%),
+        linear-gradient(180deg, #171123, var(--bg));
       min-height: 100vh;
     }
-
-    button,
-    input,
-    label {
-      font-family: inherit;
-    }
-
-    .page {
-      width: min(1120px, 100%);
-      margin: 0 auto;
-      padding: 32px 20px 56px;
-    }
-
-    /* =========================
-      頁首
-    ========================= */
+    .wrap { width: min(1080px, 100%); margin: 0 auto; padding: 28px 18px 56px; }
     .hero {
-      padding: 36px 28px;
-      border: 1px solid rgba(230, 211, 168, 0.22);
-      border-radius: 28px;
-      background:
-        linear-gradient(135deg, rgba(44, 35, 70, 0.94), rgba(19, 35, 29, 0.92)),
-        rgba(255,255,255,0.04);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.32);
       position: relative;
       overflow: hidden;
+      border-radius: 30px;
+      padding: 34px 24px;
+      background: linear-gradient(135deg, rgba(50,39,77,.92), rgba(20,43,34,.9));
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 80px rgba(0,0,0,.34);
     }
-
-    .hero::after {
+    .hero:after {
       content: "✦";
       position: absolute;
-      right: 32px;
-      top: 24px;
-      color: rgba(230, 211, 168, 0.42);
-      font-size: 80px;
-      line-height: 1;
+      right: 24px;
+      top: 18px;
+      font-size: 82px;
+      color: rgba(230, 207, 145, .32);
     }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #dcc78c;
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(32px, 5vw, 52px);
-      line-height: 1.12;
-      letter-spacing: 0.03em;
-    }
-
-    .hero p {
-      max-width: 720px;
-      margin: 16px 0 0;
-      color: #d9d0c2;
-      font-size: 17px;
-      line-height: 1.8;
-    }
-
-    /* =========================
-      主操作區
-    ========================= */
+    .eyebrow { color: var(--gold); font-size: 14px; letter-spacing: .08em; font-weight: 700; }
+    h1 { margin: 10px 0 10px; font-size: clamp(32px, 6vw, 54px); line-height: 1.1; }
+    .hero p { margin: 0; max-width: 760px; color: var(--muted); line-height: 1.8; font-size: 16px; }
     .panel {
-      margin-top: 24px;
-      padding: 24px;
+      margin-top: 22px;
+      padding: 20px;
       border-radius: 24px;
-      background: rgba(255,255,255,0.075);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.12);
+      background: var(--card);
+      backdrop-filter: blur(12px);
     }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    @media (min-width: 840px) {
-      .grid {
-        grid-template-columns: 1.05fr 1fr;
-      }
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .label {
-      color: #efe0b7;
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .hint {
-      color: #bcb1a5;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .file-box {
-      border: 1px dashed rgba(230, 211, 168, 0.46);
-      border-radius: 18px;
-      padding: 18px;
-      background: rgba(0,0,0,0.14);
-    }
-
-    input[type="file"],
-    input[type="text"] {
+    .search-row { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 740px) { .search-row { grid-template-columns: 1fr auto auto; } }
+    label { display: block; margin-bottom: 10px; color: var(--gold); font-weight: 800; }
+    input {
       width: 100%;
-      border: 1px solid rgba(230, 211, 168, 0.28);
-      border-radius: 16px;
-      background: rgba(13, 12, 18, 0.82);
-      color: #fffaf0;
-      padding: 14px 16px;
-      font-size: 16px;
+      padding: 15px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(230,207,145,.32);
+      background: rgba(0,0,0,.28);
+      color: var(--text);
+      font: inherit;
       outline: none;
     }
-
-    input[type="file"] {
-      cursor: pointer;
-    }
-
-    input[type="text"]:focus {
-      border-color: #d9bd72;
-      box-shadow: 0 0 0 4px rgba(217, 189, 114, 0.14);
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
+    input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(230,207,145,.12); }
     button {
       border: 0;
       border-radius: 999px;
-      padding: 13px 20px;
-      font-size: 15px;
-      font-weight: 700;
+      padding: 14px 18px;
+      font: inherit;
+      font-weight: 800;
       cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+      white-space: nowrap;
     }
-
-    button:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #d9bd72, #8dbf8b);
-      color: #1b1424;
-      box-shadow: 0 10px 24px rgba(217, 189, 114, 0.2);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.12);
-      color: #f8ead2;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
+    .primary { background: linear-gradient(135deg, var(--gold), var(--green)); color: #171123; }
+    .secondary { background: rgba(255,255,255,.12); color: var(--text); border: 1px solid rgba(255,255,255,.14); }
+    .meta { margin-top: 12px; color: #bdb2a2; font-size: 14px; line-height: 1.7; }
     .status {
       margin-top: 14px;
       padding: 12px 14px;
-      border-radius: 14px;
-      line-height: 1.6;
-      font-size: 14px;
+      border-radius: 16px;
+      line-height: 1.7;
       display: none;
     }
-
-    .status.show {
-      display: block;
-    }
-
-    .status.success {
-      background: rgba(111, 167, 119, 0.16);
-      border: 1px solid rgba(111, 167, 119, 0.35);
-      color: #cfe9cf;
-    }
-
-    .status.error {
-      background: rgba(222, 97, 97, 0.14);
-      border: 1px solid rgba(222, 97, 97, 0.36);
-      color: #ffd2d2;
-    }
-
-    .status.info {
-      background: rgba(217, 189, 114, 0.13);
-      border: 1px solid rgba(217, 189, 114, 0.32);
-      color: #f2dfb1;
-    }
-
-    /* =========================
-      結果區
-    ========================= */
-    .section-title {
-      margin: 32px 0 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #f4dfaa;
-      font-size: 22px;
-    }
-
-    .results {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    @media (min-width: 760px) {
-      .results {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
+    .status.show { display: block; }
+    .status.info { color: #f2dfb1; background: rgba(230,207,145,.12); border: 1px solid rgba(230,207,145,.24); }
+    .status.error { color: var(--danger); background: var(--danger-bg); border: 1px solid rgba(198,77,77,.34); }
+    .status.success { color: #dff5d8; background: rgba(112,164,103,.15); border: 1px solid rgba(112,164,103,.32); }
+    .section-title { margin: 30px 0 14px; font-size: 22px; color: var(--gold); }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
     .card {
-      border-radius: 22px;
       padding: 20px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.105), rgba(255,255,255,0.055));
-      border: 1px solid rgba(255,255,255,0.13);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+      border-radius: 24px;
+      background: linear-gradient(180deg, var(--card-strong), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.13);
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
     }
-
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 21px;
-      color: #fff4cf;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 12px 0;
-    }
-
+    .card h3 { margin: 0 0 12px; color: #fff2c7; font-size: 22px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
     .tag {
       display: inline-flex;
-      align-items: center;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(141, 191, 139, 0.14);
-      color: #d8f2d5;
-      border: 1px solid rgba(141, 191, 139, 0.22);
+      background: rgba(156,201,143,.15);
+      border: 1px solid rgba(156,201,143,.24);
+      color: #dff7d9;
       font-size: 13px;
     }
-
-    .purpose {
-      color: #d6c9ba;
-      line-height: 1.7;
-      margin: 8px 0 0;
-    }
-
-    .ingredient-list {
-      list-style: none;
-      padding: 0;
-      margin: 14px 0 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .ingredient-list li {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
+    .ingredients { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .ingredients li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
       padding: 10px 12px;
-      border-radius: 14px;
-      background: rgba(0,0,0,0.18);
-      color: #f3eadc;
+      border-radius: 15px;
+      background: rgba(0,0,0,.22);
     }
-
-    .ingredient-name {
-      font-weight: 700;
-    }
-
-    .ingredient-dose {
-      color: #dac996;
-      white-space: nowrap;
-    }
-
-    .empty-state {
-      margin-top: 22px;
-      padding: 26px;
+    .ingredient-main { display: flex; flex-direction: column; gap: 2px; }
+    .zh { font-weight: 800; }
+    .en, .type { color: #bfb4a6; font-size: 13px; }
+    .amount { color: var(--gold); text-align: right; white-space: pre-line; font-weight: 800; }
+    .empty {
+      padding: 24px;
       border-radius: 22px;
-      border: 1px solid rgba(230, 211, 168, 0.2);
-      background: rgba(255,255,255,0.06);
-      color: #d9d0c2;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      color: var(--muted);
       line-height: 1.8;
     }
-
-    .sample-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      overflow: hidden;
-      border-radius: 16px;
-      font-size: 14px;
-    }
-
-    .sample-table th,
-    .sample-table td {
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding: 10px;
-      text-align: left;
-      color: #ddd2c3;
-    }
-
-    .sample-table th {
-      color: #f2dfb1;
-      background: rgba(0,0,0,0.2);
-    }
-
-    .footer-note {
-      margin-top: 28px;
-      color: #a99f94;
-      font-size: 13px;
-      line-height: 1.7;
-    }
+    mark { background: rgba(230,207,145,.28); color: inherit; border-radius: 5px; padding: 0 2px; }
+    .small-note { color: #a99e91; font-size: 13px; line-height: 1.7; margin-top: 20px; }
+    code { color: #f4d990; }
   </style>
 </head>
-
 <body>
-  <main class="page">
+  <main class="wrap">
     <section class="hero">
-      <div class="eyebrow">🌿 WITCH HERBAL BALM GRIMOIRE</div>
+      <div class="eyebrow">🌿 WITCH BALM FORMULA BOOK</div>
       <h1>女巫精油膏配方書</h1>
-      <p>
-        上傳你的 CSV 配方資料，輸入想達成的心願或手邊已有的單一成分，
-        快速找到對應的精油膏配方，也能發現「再補哪些材料」就能做出其他配方。
-      </p>
+      <p>輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。配方資料來自同資料夾的 CSV，之後只要更新 CSV，不需要修改 index.html。</p>
     </section>
 
     <section class="panel">
-      <div class="grid">
-        <div class="field-group">
-          <label class="label" for="csvFile">1. 上傳 CSV 配方資料</label>
-          <div class="file-box">
-            <input id="csvFile" type="file" accept=".csv,text/csv" />
-            <div class="hint">
-              建議欄位名稱：名稱、目的、成分、劑量。<br />
-              也支援「一列一個配方」或「一列一個成分」兩種資料格式。
-            </div>
-          </div>
-          <div id="fileStatus" class="status"></div>
-        </div>
-
-        <div class="field-group">
-          <label class="label" for="searchInput">2. 搜尋目的或成分</label>
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="例如：財富、招財、檀香精油、蜂蠟"
-            autocomplete="off"
-          />
-          <div class="hint">
-            可輸入心願目的，也可以輸入你手上已有的單一成分。
-          </div>
-
-          <div class="actions">
-            <button class="btn-primary" id="searchBtn">搜尋配方</button>
-            <button class="btn-secondary" id="clearBtn">清除結果</button>
-            <button class="btn-secondary" id="loadSampleBtn">載入範例資料</button>
-          </div>
-
-          <div id="searchStatus" class="status"></div>
-        </div>
+      <label for="searchInput">搜尋精油膏名稱或成分名稱</label>
+      <div class="search-row">
+        <input id="searchInput" type="text" placeholder="例如：財富、檀香、Sandalwood、蜜蠟、荷荷巴油" autocomplete="off" />
+        <button id="searchBtn" class="primary">搜尋</button>
+        <button id="clearBtn" class="secondary">清除</button>
       </div>
+      <div class="meta" id="dataMeta">正在讀取配方資料...</div>
+      <div class="status" id="statusBox"></div>
     </section>
 
-    <section>
-      <h2 class="section-title">🔮 搜尋結果</h2>
-      <div id="resultContainer" class="results"></div>
+    <h2 class="section-title">🔮 查詢結果</h2>
+    <section id="results" class="grid"></section>
+    <section id="emptyState" class="empty">配方讀取完成後，可以直接輸入「精油膏名稱」或「成分名稱」查詢。</section>
 
-      <div id="emptyState" class="empty-state">
-        請先上傳 CSV，或點擊「載入範例資料」體驗搜尋。<br />
-        你可以試著搜尋：「財富」、「檀香精油」、「守護」。
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">🌙 可延伸製作的配方</h2>
-      <div id="recommendContainer" class="results"></div>
-    </section>
-
-    <section class="panel">
-      <h2 class="section-title" style="margin-top:0;">📄 建議 CSV 格式</h2>
-      <p class="hint">
-        你可以使用以下任一種格式。系統會自動嘗試辨識欄位。
-      </p>
-
-      <table class="sample-table">
-        <thead>
-          <tr>
-            <th>名稱</th>
-            <th>目的</th>
-            <th>成分</th>
-            <th>劑量</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>財富精油膏</td>
-            <td>財富、招財、金錢</td>
-            <td>芭芭拉油</td>
-            <td>5ml</td>
-          </tr>
-          <tr>
-            <td>財富精油膏</td>
-            <td>財富、招財、金錢</td>
-            <td>檀香精油</td>
-            <td>5滴</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p class="footer-note">
-        注意：此工具定位為配方資料整理與搜尋工具，不提供醫療、療效或皮膚治療建議。
-        實際使用精油、蜂蠟與植物油時，仍應注意濃度、過敏測試與相關法規。
-      </p>
-    </section>
+    <p class="small-note">
+      GitHub Pages 放置方式：請把這個檔案命名為 <code>index.html</code>，並把配方檔命名為 <code>Potions-Formula.csv</code>，兩個檔案放在同一個資料夾。之後只要更新 CSV，網頁會自動讀取新的配方內容。
+    </p>
   </main>
 
   <script>
-    /*
-      ============================================================
-      女巫精油膏配方書
-      純前端版本：CSV 上傳、搜尋、推薦
-      ============================================================
-    */
+    /* ============================================================
+      設定區：CSV 檔名固定為同資料夾的 Potions-Formula.csv
+      未來只要更新這份 CSV，不需要改 index.html。
+    ============================================================ */
+    const CSV_PATH = "./Potions-Formula.csv";
 
-    // 儲存整理後的配方資料
     let recipes = [];
+    let allIngredients = [];
 
-    // DOM 元素
-    const csvFileInput = document.getElementById("csvFile");
     const searchInput = document.getElementById("searchInput");
     const searchBtn = document.getElementById("searchBtn");
     const clearBtn = document.getElementById("clearBtn");
-    const loadSampleBtn = document.getElementById("loadSampleBtn");
-
-    const fileStatus = document.getElementById("fileStatus");
-    const searchStatus = document.getElementById("searchStatus");
-    const resultContainer = document.getElementById("resultContainer");
-    const recommendContainer = document.getElementById("recommendContainer");
+    const statusBox = document.getElementById("statusBox");
+    const results = document.getElementById("results");
     const emptyState = document.getElementById("emptyState");
+    const dataMeta = document.getElementById("dataMeta");
 
-    /*
-      顯示狀態訊息
-      type 可使用：success / error / info
-    */
-    function showStatus(element, message, type = "info") {
-      element.textContent = message;
-      element.className = `status show ${type}`;
-    }
-
-    function hideStatus(element) {
-      element.textContent = "";
-      element.className = "status";
-    }
-
-    /*
-      文字正規化：
-      - 去除前後空白
-      - 轉小寫
-      - 移除多餘空格
-      讓搜尋更寬鬆
-    */
-    function normalizeText(text) {
-      return String(text || "")
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, "");
-    }
-
-    /*
-      簡易 CSV 解析器
-      支援：
-      - 逗號分隔
-      - 雙引號包住含逗號的內容
-      - 換行
-    */
-    function parseCSV(csvText) {
-      const rows = [];
-      let currentRow = [];
-      let currentCell = "";
-      let insideQuotes = false;
-
-      for (let i = 0; i < csvText.length; i++) {
-        const char = csvText[i];
-        const nextChar = csvText[i + 1];
-
-        if (char === '"' && insideQuotes && nextChar === '"') {
-          currentCell += '"';
-          i++;
-        } else if (char === '"') {
-          insideQuotes = !insideQuotes;
-        } else if (char === "," && !insideQuotes) {
-          currentRow.push(currentCell.trim());
-          currentCell = "";
-        } else if ((char === "\n" || char === "\r") && !insideQuotes) {
-          if (char === "\r" && nextChar === "\n") i++;
-
-          currentRow.push(currentCell.trim());
-
-          if (currentRow.some(cell => cell !== "")) {
-            rows.push(currentRow);
-          }
-
-          currentRow = [];
-          currentCell = "";
-        } else {
-          currentCell += char;
-        }
-      }
-
-      if (currentCell || currentRow.length > 0) {
-        currentRow.push(currentCell.trim());
-        if (currentRow.some(cell => cell !== "")) {
-          rows.push(currentRow);
-        }
-      }
-
-      return rows;
-    }
-
-    /*
-      將 CSV rows 轉成物件陣列
-    */
-    function rowsToObjects(rows) {
-      if (!rows || rows.length < 2) {
-        throw new Error("CSV 內容不足，請至少提供標題列與一筆資料。");
-      }
-
-      const headers = rows[0].map(header => header.trim());
-      const dataRows = rows.slice(1);
-
-      return dataRows.map(row => {
-        const obj = {};
-        headers.forEach((header, index) => {
-          obj[header] = row[index] || "";
-        });
-        return obj;
-      });
-    }
-
-    /*
-      找出可能的欄位名稱
-      這裡做寬鬆比對，避免 CSV 欄位名稱稍微不同就讀不到
-    */
-    function findField(row, candidates) {
-      const keys = Object.keys(row);
-
-      for (const candidate of candidates) {
-        const foundKey = keys.find(key => normalizeText(key) === normalizeText(candidate));
-        if (foundKey) return row[foundKey];
-      }
-
-      for (const candidate of candidates) {
-        const foundKey = keys.find(key => normalizeText(key).includes(normalizeText(candidate)));
-        if (foundKey) return row[foundKey];
-      }
-
-      return "";
-    }
-
-    /*
-      將原始 CSV 物件整理成配方結構
-      支援兩種資料：
-      1. 一列一個成分：相同名稱會被合併
-      2. 一列一個配方：成分欄可能包含多個成分文字
-    */
-    function normalizeRecipes(rawRows) {
-      const recipeMap = new Map();
-
-      rawRows.forEach((row, index) => {
-        const name = findField(row, ["名稱", "配方名稱", "藥膏名稱", "精油膏名稱", "name", "recipe"]);
-        const purpose = findField(row, ["目的", "功效", "心願", "標籤", "分類", "用途", "purpose", "tag"]);
-        const ingredient = findField(row, ["成分", "成份", "材料", "ingredient"]);
-        const dose = findField(row, ["劑量", "份量", "用量", "dose", "amount"]);
-        const note = findField(row, ["備註", "說明", "note", "description"]);
-
-        if (!name && !ingredient && !purpose) return;
-
-        const recipeName = name || `未命名配方 ${index + 1}`;
-
-        if (!recipeMap.has(recipeName)) {
-          recipeMap.set(recipeName, {
-            name: recipeName,
-            purpose: purpose || "",
-            note: note || "",
-            ingredients: []
-          });
-        }
-
-        const recipe = recipeMap.get(recipeName);
-
-        if (!recipe.purpose && purpose) recipe.purpose = purpose;
-        if (!recipe.note && note) recipe.note = note;
-
-        if (ingredient) {
-          recipe.ingredients.push({
-            name: ingredient,
-            dose: dose || ""
-          });
-        }
-      });
-
-      return Array.from(recipeMap.values()).filter(recipe => {
-        return recipe.name || recipe.purpose || recipe.ingredients.length > 0;
-      });
-    }
-
-    /*
-      讀取 CSV 檔案
-    */
-    csvFileInput.addEventListener("change", event => {
-      const file = event.target.files[0];
-
-      if (!file) return;
-
-      if (!file.name.toLowerCase().endsWith(".csv")) {
-        showStatus(fileStatus, "請上傳 CSV 檔案格式。", "error");
-        return;
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-        try {
-          const csvText = e.target.result;
-          const rows = parseCSV(csvText);
-          const objects = rowsToObjects(rows);
-          recipes = normalizeRecipes(objects);
-
-          if (recipes.length === 0) {
-            showStatus(fileStatus, "沒有讀取到有效配方，請確認 CSV 是否包含名稱、目的或成分欄位。", "error");
-            return;
-          }
-
-          showStatus(fileStatus, `已成功載入 ${recipes.length} 筆配方。`, "success");
-          hideStatus(searchStatus);
-          renderEmptyState();
-        } catch (error) {
-          showStatus(fileStatus, `讀取失敗：${error.message}`, "error");
-        }
-      };
-
-      reader.onerror = function() {
-        showStatus(fileStatus, "檔案讀取失敗，請重新上傳一次。", "error");
-      };
-
-      reader.readAsText(file, "UTF-8");
-    });
-
-    /*
-      載入範例資料
-      方便尚未準備 CSV 時測試
-    */
-    loadSampleBtn.addEventListener("click", () => {
-      recipes = [
-        {
-          name: "財富精油膏",
-          purpose: "財富、招財、金錢、事業機會",
-          note: "適合想聚焦財務目標與工作機會時使用的象徵性配方。",
-          ingredients: [
-            { name: "芭芭拉油", dose: "5ml" },
-            { name: "蜂蠟", dose: "1g" },
-            { name: "檀香精油", dose: "5滴" },
-            { name: "甜橙精油", dose: "3滴" }
-          ]
-        },
-        {
-          name: "守護精油膏",
-          purpose: "守護、安定、保護、睡前儀式",
-          note: "適合想營造穩定與安全感的日常儀式。",
-          ingredients: [
-            { name: "芭芭拉油", dose: "5ml" },
-            { name: "蜂蠟", dose: "1g" },
-            { name: "薰衣草精油", dose: "4滴" },
-            { name: "乳香精油", dose: "2滴" }
-          ]
-        },
-        {
-          name: "靈感精油膏",
-          purpose: "靈感、創作、專注、書寫",
-          note: "適合創作、寫作與需要整理思緒時使用的象徵性配方。",
-          ingredients: [
-            { name: "荷荷芭油", dose: "5ml" },
-            { name: "蜂蠟", dose: "1g" },
-            { name: "迷迭香精油", dose: "3滴" },
-            { name: "檀香精油", dose: "2滴" }
-          ]
-        }
-      ];
-
-      showStatus(fileStatus, "已載入範例資料，可以搜尋「財富」、「守護」或「檀香精油」。", "success");
-      hideStatus(searchStatus);
-      renderEmptyState();
-    });
-
-    /*
-      搜尋配方
-    */
+    document.addEventListener("DOMContentLoaded", loadCsvData);
     searchBtn.addEventListener("click", handleSearch);
-
+    clearBtn.addEventListener("click", clearSearch);
     searchInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        handleSearch();
-      }
+      if (event.key === "Enter") handleSearch();
     });
+
+    async function loadCsvData() {
+      try {
+        // 加上時間參數，降低 GitHub Pages 或瀏覽器快取造成 CSV 沒更新的機率。
+        const response = await fetch(`${CSV_PATH}?v=${Date.now()}`);
+        if (!response.ok) throw new Error(`讀取 CSV 失敗，狀態碼：${response.status}`);
+
+        const csvText = await response.text();
+        const rows = parseCSV(csvText);
+        const parsed = parseHorizontalFormulaTable(rows);
+
+        recipes = parsed.recipes;
+        allIngredients = parsed.allIngredients;
+
+        if (!recipes.length) throw new Error("CSV 內沒有讀到任何精油膏配方。請確認第 1 列是否有配方名稱。 ");
+
+        dataMeta.textContent = `已讀取 ${recipes.length} 款精油膏、${allIngredients.length} 筆原料。資料來源：${CSV_PATH}`;
+        showStatus("success", "配方資料已載入完成，可以開始搜尋。");
+        renderEmpty(`可以搜尋：${recipes.slice(0, 4).map(r => r.name).join("、")}，或輸入任一成分名稱。`);
+      } catch (error) {
+        dataMeta.textContent = "配方資料尚未載入。";
+        showStatus("error", `無法讀取 CSV：${error.message}。請確認 index.html 與 Potions-Formula.csv 是否放在 GitHub 同一個資料夾。`);
+        renderEmpty("目前無法搜尋，因為配方 CSV 尚未成功讀取。若你是在電腦直接雙擊 HTML 開啟，fetch 可能會被瀏覽器擋下；放到 GitHub Pages 後即可正常讀取同資料夾 CSV。");
+      }
+    }
 
     function handleSearch() {
       const keyword = searchInput.value.trim();
-
-      resultContainer.innerHTML = "";
-      recommendContainer.innerHTML = "";
-
       if (!keyword) {
-        showStatus(searchStatus, "請先輸入想搜尋的目的或成分，例如：財富、檀香精油。", "error");
-        emptyState.style.display = "block";
+        showStatus("error", "請先輸入精油膏名稱或成分名稱，例如：財富、檀香、蜜蠟。");
+        return;
+      }
+      if (!recipes.length) {
+        showStatus("error", "配方資料還沒載入成功，請先確認 CSV 檔案是否存在。 ");
         return;
       }
 
-      if (recipes.length === 0) {
-        showStatus(searchStatus, "請先上傳 CSV，或點擊「載入範例資料」後再搜尋。", "error");
-        emptyState.style.display = "block";
-        return;
-      }
+      const q = normalize(keyword);
 
-      const normalizedKeyword = normalizeText(keyword);
-
-      const matchedRecipes = recipes.filter(recipe => {
-        const searchableText = [
-          recipe.name,
-          recipe.purpose,
-          recipe.note,
-          ...recipe.ingredients.map(item => `${item.name}${item.dose}`)
-        ].join(" ");
-
-        return normalizeText(searchableText).includes(normalizedKeyword);
+      const matched = recipes.filter(recipe => {
+        const recipeNameHit = normalize(recipe.name).includes(q);
+        const ingredientHit = recipe.ingredients.some(item => {
+          return normalize(item.nameZh).includes(q) ||
+                 normalize(item.nameEn).includes(q) ||
+                 normalize(item.type).includes(q);
+        });
+        return recipeNameHit || ingredientHit;
       });
 
-      if (matchedRecipes.length === 0) {
-        showStatus(searchStatus, `找不到與「${keyword}」相關的配方，建議換個關鍵字，例如目的、精油名稱或植物油名稱。`, "info");
-        emptyState.style.display = "block";
-        emptyState.innerHTML = `
-          目前沒有找到符合「${escapeHTML(keyword)}」的配方。<br>
-          你可以試試看更短的關鍵字，例如「財富」改成「財」，或「檀香精油」改成「檀香」。
-        `;
+      if (!matched.length) {
+        showStatus("info", `目前找不到與「${escapeHTML(keyword)}」相關的精油膏。`);
+        results.innerHTML = "";
+        renderEmpty("你可以改用較短的關鍵字，例如「檀香精油」改成「檀香」，或用英文名稱搜尋，例如 Sandalwood。");
         return;
       }
 
-      hideStatus(searchStatus);
+      showStatus("success", `找到 ${matched.length} 款相關精油膏。`);
       emptyState.style.display = "none";
-
-      renderRecipes(matchedRecipes, resultContainer);
-
-      const recommendations = getRecommendations(matchedRecipes);
-      renderRecipes(recommendations, recommendContainer, true);
-
-      if (recommendations.length === 0) {
-        recommendContainer.innerHTML = `
-          <div class="empty-state">
-            目前沒有找到可延伸製作的其他配方。<br>
-            之後資料變多時，系統會依照相同成分自動推薦。
-          </div>
-        `;
-      }
+      renderRecipes(matched, keyword);
     }
 
-    /*
-      根據搜尋結果的成分，推薦其他配方
-      邏輯：
-      - 取出已命中配方中的所有成分
-      - 找出其他也包含其中任一成分的配方
-      - 依照共用成分數排序
-    */
-    function getRecommendations(matchedRecipes) {
-      const matchedNames = new Set(matchedRecipes.map(recipe => recipe.name));
+    function clearSearch() {
+      searchInput.value = "";
+      results.innerHTML = "";
+      showStatus("success", "已清除搜尋結果。");
+      renderEmpty("請輸入精油膏名稱或成分名稱查詢。");
+    }
 
-      const ownedIngredients = new Set();
+    /* ============================================================
+      解析橫向配方表
+      CSV 格式預期：
+      原料名稱, 英文名稱, 類型, 財富藥膏, 驅邪藥膏, ...
+      蜜蠟, , 藥膏基底, 5g, 5g, ...
+      荷荷巴油, Jojoba, 基底油, 20ml, 20ml, ...
+    ============================================================ */
+    function parseHorizontalFormulaTable(rows) {
+      if (!rows || rows.length < 2) throw new Error("CSV 內容不足。 ");
 
-      matchedRecipes.forEach(recipe => {
-        recipe.ingredients.forEach(item => {
-          ownedIngredients.add(normalizeText(item.name));
+      const header = rows[0].map(cell => cleanCell(cell));
+      const recipeColumns = [];
+
+      header.forEach((title, index) => {
+        // 前三欄固定為原料資訊，第 4 欄開始視為配方名稱。
+        if (index >= 3 && title) {
+          recipeColumns.push({ index, name: title });
+        }
+      });
+
+      const recipeMap = recipeColumns.map(col => ({
+        name: col.name,
+        ingredients: []
+      }));
+
+      const ingredientRows = [];
+
+      rows.slice(1).forEach(row => {
+        const nameZh = cleanCell(row[0]);
+        const nameEn = cleanCell(row[1]);
+        const type = cleanCell(row[2]);
+
+        // 跳過完全空白列。
+        if (!nameZh && !nameEn && !type) return;
+
+        const ingredientBase = { nameZh, nameEn, type };
+        ingredientRows.push(ingredientBase);
+
+        recipeColumns.forEach((col, recipeIndex) => {
+          const rawAmount = cleanCell(row[col.index]);
+          if (!rawAmount) return;
+
+          recipeMap[recipeIndex].ingredients.push({
+            ...ingredientBase,
+            amount: formatAmount(rawAmount, type)
+          });
         });
       });
 
-      const scored = recipes
-        .filter(recipe => !matchedNames.has(recipe.name))
-        .map(recipe => {
-          const sharedIngredients = recipe.ingredients.filter(item => {
-            return ownedIngredients.has(normalizeText(item.name));
-          });
-
-          return {
-            recipe,
-            score: sharedIngredients.length,
-            sharedIngredients
-          };
-        })
-        .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score);
-
-      return scored.map(item => ({
-        ...item.recipe,
-        sharedIngredients: item.sharedIngredients
-      }));
+      return {
+        recipes: recipeMap.filter(recipe => recipe.ingredients.length > 0),
+        allIngredients: ingredientRows
+      };
     }
 
-    /*
-      將配方卡片渲染到畫面
-    */
-    function renderRecipes(recipeList, container, isRecommendation = false) {
-      container.innerHTML = "";
+    // 若精油欄位只填數字，預設補上「滴」。已有 g/ml/文字註記則維持原樣。
+    function formatAmount(value, type) {
+      const text = cleanCell(value);
+      const isOnlyNumber = /^\d+(\.\d+)?$/.test(text);
+      const isEssentialOil = normalize(type).includes("精油");
+      if (isOnlyNumber && isEssentialOil) return `${text}滴`;
+      return text;
+    }
 
-      recipeList.forEach(recipe => {
-        const card = document.createElement("article");
-        card.className = "card";
+    /* ============================================================
+      CSV parser：支援雙引號、逗號、換行
+    ============================================================ */
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
 
-        const purposeTags = splitTags(recipe.purpose);
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
 
-        const sharedHTML = isRecommendation && recipe.sharedIngredients
-          ? `
-            <div class="tag-row">
-              ${recipe.sharedIngredients.map(item => `<span class="tag">已擁有：${escapeHTML(item.name)}</span>`).join("")}
-            </div>
-          `
-          : "";
+        if (char === '"' && inQuotes && next === '"') {
+          cell += '"';
+          i++;
+        } else if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === "," && !inQuotes) {
+          row.push(cell);
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") i++;
+          row.push(cell);
+          if (row.some(c => cleanCell(c) !== "")) rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += char;
+        }
+      }
 
-        card.innerHTML = `
-          <h3>${escapeHTML(recipe.name)}</h3>
+      row.push(cell);
+      if (row.some(c => cleanCell(c) !== "")) rows.push(row);
+      return rows;
+    }
 
-          ${recipe.purpose ? `<p class="purpose">${escapeHTML(recipe.purpose)}</p>` : ""}
+    function renderRecipes(list, keyword) {
+      const q = normalize(keyword);
+      results.innerHTML = list.map(recipe => {
+        const ingredientItems = recipe.ingredients.map(item => {
+          const zh = highlight(item.nameZh || "未命名原料", q);
+          const en = item.nameEn ? `<span class="en">${highlight(item.nameEn, q)}</span>` : "";
+          const type = item.type ? `<span class="type">${highlight(item.type, q)}</span>` : "";
+          return `
+            <li>
+              <span class="ingredient-main">
+                <span class="zh">${zh}</span>
+                ${en}
+                ${type}
+              </span>
+              <span class="amount">${escapeHTML(item.amount)}</span>
+            </li>
+          `;
+        }).join("");
 
-          ${purposeTags.length > 0 ? `
-            <div class="tag-row">
-              ${purposeTags.map(tag => `<span class="tag">${escapeHTML(tag)}</span>`).join("")}
-            </div>
-          ` : ""}
+        const matchedIngredients = recipe.ingredients.filter(item => {
+          return normalize(item.nameZh).includes(q) || normalize(item.nameEn).includes(q) || normalize(item.type).includes(q);
+        });
 
-          ${sharedHTML}
+        const tags = matchedIngredients.length
+          ? `<div class="tags">${matchedIngredients.slice(0, 6).map(item => `<span class="tag">含有：${escapeHTML(item.nameZh || item.nameEn)}</span>`).join("")}</div>`
+          : `<div class="tags"><span class="tag">配方名稱符合</span></div>`;
 
-          ${recipe.note ? `<p class="purpose">${escapeHTML(recipe.note)}</p>` : ""}
-
-          <ul class="ingredient-list">
-            ${recipe.ingredients.map(item => `
-              <li>
-                <span class="ingredient-name">${escapeHTML(item.name)}</span>
-                <span class="ingredient-dose">${escapeHTML(item.dose || "未填劑量")}</span>
-              </li>
-            `).join("")}
-          </ul>
+        return `
+          <article class="card">
+            <h3>${highlight(recipe.name, q)}</h3>
+            ${tags}
+            <ul class="ingredients">${ingredientItems}</ul>
+          </article>
         `;
-
-        container.appendChild(card);
-      });
+      }).join("");
     }
 
-    /*
-      將目的欄位拆成標籤
-    */
-    function splitTags(text) {
-      if (!text) return [];
-
-      return text
-        .split(/[,，、｜|/／\s]+/)
-        .map(tag => tag.trim())
-        .filter(Boolean)
-        .slice(0, 8);
-    }
-
-    /*
-      清除畫面
-    */
-    clearBtn.addEventListener("click", () => {
-      searchInput.value = "";
-      resultContainer.innerHTML = "";
-      recommendContainer.innerHTML = "";
-      hideStatus(searchStatus);
-      renderEmptyState();
-    });
-
-    /*
-      初始空狀態
-    */
-    function renderEmptyState() {
-      resultContainer.innerHTML = "";
-      recommendContainer.innerHTML = "";
-
+    function renderEmpty(message) {
       emptyState.style.display = "block";
-      emptyState.innerHTML = `
-        請輸入目的或成分後搜尋。<br>
-        ${recipes.length > 0 ? `目前已載入 ${recipes.length} 筆配方。` : "請先上傳 CSV，或點擊「載入範例資料」體驗搜尋。"}
-      `;
+      emptyState.innerHTML = message;
     }
 
-    /*
-      避免 CSV 內容中有特殊字元導致 HTML 注入
-    */
+    function showStatus(type, message) {
+      statusBox.className = `status show ${type}`;
+      statusBox.innerHTML = message;
+    }
+
+    function cleanCell(value) {
+      return String(value ?? "").replace(/^\uFEFF/, "").trim();
+    }
+
+    function normalize(value) {
+      return cleanCell(value).toLowerCase().replace(/\s+/g, "");
+    }
+
     function escapeHTML(value) {
-      return String(value || "")
+      return String(value ?? "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
@@ -940,7 +427,21 @@
         .replaceAll("'", "&#039;");
     }
 
-    renderEmptyState();
+    function highlight(text, normalizedKeyword) {
+      const safe = escapeHTML(text);
+      if (!normalizedKeyword) return safe;
+
+      // 中文/英文混合搜尋時，直接用原字串做寬鬆包含；為避免破壞 HTML，只在簡單情況標記。
+      const raw = cleanCell(text);
+      const rawLower = raw.toLowerCase();
+      const keyword = searchInput.value.trim().toLowerCase();
+
+      if (!keyword || !rawLower.includes(keyword)) return safe;
+
+      const start = rawLower.indexOf(keyword);
+      const end = start + keyword.length;
+      return `${escapeHTML(raw.slice(0, start))}<mark>${escapeHTML(raw.slice(start, end))}</mark>${escapeHTML(raw.slice(end))}`;
+    }
   </script>
 </body>
 </html>
