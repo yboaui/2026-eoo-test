@@ -1,432 +1,235 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>女巫精油膏配方書</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #f6f0e7;
-      background:
-        radial-gradient(circle at 12% 0%, rgba(96, 47, 137, .55), transparent 34%),
-        radial-gradient(circle at 85% 15%, rgba(39, 88, 68, .52), transparent 32%),
-        linear-gradient(180deg, #18101f 0%, #0f0b16 58%, #0b0910 100%);
-    }
-    .page { width: min(1120px, 100%); margin: 0 auto; padding: 28px 20px 64px; }
-    .hero {
-      border: 1px solid rgba(224, 204, 150, .22);
-      border-radius: 30px;
-      padding: 34px 28px;
-      background: linear-gradient(135deg, rgba(41, 31, 66, .9), rgba(18, 51, 43, .78));
-      box-shadow: 0 24px 70px rgba(0, 0, 0, .34);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::after { content: "✦"; position: absolute; right: 34px; top: 28px; font-size: 82px; color: rgba(226, 214, 158, .34); }
-    .eyebrow { margin-bottom: 10px; color: #e2cd8e; font-size: 14px; letter-spacing: .1em; font-weight: 800; }
-    h1 { margin: 0; font-size: clamp(38px, 6vw, 62px); line-height: 1.08; letter-spacing: .03em; }
-    .hero p { margin: 18px 0 0; max-width: 760px; color: #ddd3c8; font-size: 17px; line-height: 1.75; }
-    .panel {
-      margin-top: 24px;
-      padding: 22px;
-      border-radius: 26px;
-      background: rgba(255, 255, 255, .075);
-      border: 1px solid rgba(255, 255, 255, .13);
-      box-shadow: 0 16px 48px rgba(0,0,0,.22);
-    }
-    label { display: block; margin-bottom: 12px; color: #ead491; font-weight: 800; }
-    .search-row { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; }
-    input {
-      width: 100%; min-height: 56px; padding: 0 18px; border-radius: 18px;
-      border: 1px solid rgba(226, 205, 142, .28); outline: none;
-      background: rgba(18, 13, 24, .85); color: #fff8e8; font-size: 16px;
-    }
-    input:focus { border-color: #dec978; box-shadow: 0 0 0 4px rgba(222,201,120,.14); }
-    button {
-      min-height: 56px; border: 0; border-radius: 999px; padding: 0 24px;
-      font-size: 16px; font-weight: 900; cursor: pointer; transition: transform .15s ease, opacity .15s ease;
-    }
-    button:hover { transform: translateY(-1px); }
-    .primary { background: linear-gradient(135deg, #e0d68a, #a9d38e); color: #18101f; }
-    .secondary { background: rgba(255,255,255,.13); color: #f7ead6; border: 1px solid rgba(255,255,255,.14); }
-    .meta { margin-top: 12px; color: #c9bfb5; font-size: 14px; }
-    .message { margin-top: 16px; padding: 14px 16px; border-radius: 18px; background: rgba(0,0,0,.18); color: #e9dfd0; line-height: 1.7; }
-    .message.error { background: rgba(130, 49, 62, .28); border: 1px solid rgba(215, 92, 110, .35); }
-    .section-title { margin: 34px 0 16px; font-size: 24px; color: #efd894; }
-    .results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-    .card {
-      border-radius: 24px; padding: 22px;
-      border: 1px solid rgba(255,255,255,.13);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.055));
-      box-shadow: 0 14px 34px rgba(0,0,0,.22);
-    }
-    .card h3 { margin: 0 0 14px; color: #fff3c8; font-size: 23px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
-    .tag { border-radius: 999px; padding: 6px 10px; color: #dcefd5; background: rgba(145, 191, 125, .16); border: 1px solid rgba(145,191,125,.22); font-size: 13px; }
-    .ingredient-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-    .ingredient-list li { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 10px 12px; border-radius: 14px; background: rgba(0,0,0,.2); }
-    .ingredient-name { font-weight: 800; }
-    .ingredient-name small { display: block; margin-top: 3px; color: #aee0bd; font-weight: 600; }
-    .amount { color: #e2cd8e; white-space: nowrap; }
-    mark { background: rgba(224, 214, 138, .28); color: #fff4be; padding: 0 2px; border-radius: 4px; }
-    .empty { padding: 24px 26px; border-radius: 24px; color: #ddd3c8; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); line-height: 1.7; }
-    @media (max-width: 720px) {
-      .page { padding: 18px 14px 44px; }
-      .hero { padding: 28px 22px; }
-      .hero::after { font-size: 56px; right: 20px; top: 20px; }
-      .search-row { grid-template-columns: 1fr; }
-      button { width: 100%; }
-      .results { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>女巫精油膏配方書</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:#f8f0df; background: radial-gradient(circle at 10% 0%, rgba(93,40,111,.45), transparent 28%), radial-gradient(circle at 88% 18%, rgba(36,95,72,.34), transparent 30%), #0f0b18; min-height:100vh; }
+  .wrap { width:min(1100px, 100%); margin:0 auto; padding:28px 18px 56px; }
+  .hero, .panel, .notice, .card { border:1px solid rgba(230,210,165,.18); background:rgba(255,255,255,.07); box-shadow:0 22px 55px rgba(0,0,0,.24); backdrop-filter: blur(12px); }
+  .hero { border-radius:28px; padding:34px 26px; background:linear-gradient(135deg, rgba(47,38,78,.88), rgba(20,54,43,.82)); position:relative; overflow:hidden; }
+  .hero:after { content:"✦"; position:absolute; right:32px; top:26px; color:rgba(232,217,165,.34); font-size:72px; }
+  .eyebrow { color:#e6cd8a; font-weight:800; letter-spacing:.1em; font-size:13px; margin-bottom:10px; }
+  h1 { margin:0; font-size:clamp(36px,6vw,58px); letter-spacing:.03em; line-height:1.12; }
+  .subtitle { margin:14px 0 0; color:#d8cfc4; line-height:1.8; font-size:16px; max-width:720px; }
+  .panel { margin-top:22px; border-radius:24px; padding:22px; }
+  label { display:block; color:#ead491; font-weight:800; margin-bottom:10px; }
+  .search-row { display:flex; gap:12px; align-items:center; }
+  input { flex:1; min-width:0; border:1px solid rgba(230,210,165,.26); border-radius:18px; padding:15px 16px; background:#14101c; color:#fff; font-size:16px; outline:none; }
+  input:focus { border-color:#dfc879; box-shadow:0 0 0 4px rgba(223,200,121,.13); }
+  button { border:0; border-radius:999px; padding:14px 22px; font-weight:900; font-size:16px; cursor:pointer; white-space:nowrap; }
+  .primary { color:#17101c; background:linear-gradient(135deg, #eadb91, #a8cf8c); }
+  .secondary { color:#f4ead8; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.13); }
+  .meta { margin-top:12px; color:#bfb3a7; font-size:14px; line-height:1.7; }
+  h2 { color:#f0d88f; font-size:24px; margin:30px 0 16px; }
+  .notice { border-radius:22px; padding:20px 22px; color:#ded4c8; line-height:1.8; }
+  .results { display:grid; grid-template-columns:1fr; gap:16px; }
+  @media (min-width:760px) { .results { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
+  .card { border-radius:22px; padding:22px; }
+  .card h3 { margin:0 0 12px; color:#fff2bd; font-size:22px; }
+  .badge-row { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 16px; }
+  .badge { display:inline-flex; border-radius:999px; padding:6px 10px; background:rgba(159,204,134,.14); border:1px solid rgba(159,204,134,.24); color:#dbf6ce; font-size:13px; }
+  .list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .list li { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:11px 12px; border-radius:14px; background:rgba(0,0,0,.2); }
+  .name { font-weight:800; }
+  .en { color:#aaa0a0; font-size:13px; }
+  .amount { color:#ead491; white-space:pre-line; text-align:right; }
+  .type { color:#c4b6cc; font-size:13px; text-align:right; }
+  mark { background:rgba(234,219,145,.28); color:#fff5c4; padding:0 .14em; border-radius:4px; }
+  @media (max-width:640px) { .search-row { flex-direction:column; align-items:stretch; } button { width:100%; } .hero { padding:28px 22px; } .list li { grid-template-columns:1fr; } .amount,.type { text-align:left; } }
+</style>
 </head>
 <body>
-  <main class="page">
-    <section class="hero">
-      <div class="eyebrow">🌿 WITCH BALM FORMULA BOOK</div>
-      <h1>女巫精油膏配方書</h1>
-      <p>輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。</p>
-    </section>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">🌿 WITCH BALM FORMULA BOOK</div>
+    <h1>女巫精油膏配方書</h1>
+    <p class="subtitle">輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。</p>
+  </section>
 
-    <section class="panel">
-      <label for="searchInput">搜尋精油膏名稱或成分名稱</label>
-      <div class="search-row">
-        <input id="searchInput" type="text" placeholder="例如：財富、檀香、Sandalwood、蜜蠟、荷荷巴油" autocomplete="off" />
-        <button id="searchBtn" class="primary">搜尋</button>
-        <button id="clearBtn" class="secondary">清除</button>
-      </div>
-      <div id="meta" class="meta">配方書準備中……</div>
-      <div id="message" class="message" style="display:none;"></div>
-    </section>
+  <section class="panel">
+    <label for="keyword">搜尋精油膏名稱或成分名稱</label>
+    <div class="search-row">
+      <input id="keyword" type="search" placeholder="例如：財富、檀香、Sandalwood、蜜蠟、荷荷巴油" autocomplete="off" />
+      <button class="primary" id="searchBtn">搜尋</button>
+      <button class="secondary" id="clearBtn">清除</button>
+    </div>
+    <div class="meta" id="meta">配方資料載入中...</div>
+  </section>
 
-    <h2 class="section-title">🔮 查詢結果</h2>
-    <section id="results" class="results"></section>
-  </main>
+  <h2>🔮 查詢結果</h2>
+  <section id="result" class="results"></section>
+</main>
+<script>
+const CSV_FILE = 'Potions-Formula.csv';
+const BACKUP_CSV = "原料名稱,英文名稱,類型,財富藥膏,驅邪藥膏,無毒飛天藥膏#2,\"《房間之主》\n語氣膏\"\n,,,,,,\n蜜蠟,,藥膏基底,5g,5g,5g,5g\n荷荷巴油,Jojoba,基底油,20ml,20ml,20ml,20ml\n羅勒,Basil,精油,1,,,\n丁香,Clove,精油,1,1,,\n廣藿香,Patchouli,精油,4,,,\n岩蘭草,Vetiver,精油,\"3\n(橡木苔特調配方)\",,,5\n肉桂,Cinnamon,精油,\"3\n(橡木苔特調配方)\",,,\n橡木苔,Oakmoss,精油,3,,,\n檀香,Sandalwood,精油,,,2,\n茉莉,Jasmine,精油,,,1,\n安息香,,精油,,,1,\n肉豆蔻皮,Mace,精油,,,1,\n乳香,Frankincense,精油,,3,,\n胡椒薄荷,Peppermint,精油,,2,,\n松樹,Pine,精油,,1,,\n龍延香,Ambergris oil,精油,,,,\n羅馬洋甘菊,\"Chamomile, Roman\",,,,,3\n檸檬馬鞭草,,,,,,\"5\n(或)\"\n苦橙葉,Petitgrain,,,,,\"5\n(或)\"\n西印度檀香 Amyris,,精油,,,,\n歐白芷 Angelica,,精油,,,,\n大茴香籽 Anise Seed,,精油,,,,\n月桂 Bay Laurel,,精油,,,,\n佛手柑 Bergamot,,精油,,,,\n黑胡椒 Black Pepper,,精油,,,,\n白千層 Cajeput,,精油,,,,\n藏茴香 Caraway Seed,,精油,,,,\n小荳蔻 Cardamom,,精油,,,,\n野胡蘿蔔籽 Carrot Seed,,精油,,,,\n兩種雪松精油,,,,,,\n\"大西洋雪松 Cedarwood, Atlas\",,,,,,\n\"維吉尼亞雪松 Cedarwood, Virginia\",,,,,,\n兩種洋甘菊精油,,,,,,\n\"德國洋甘菊 Chamomile, German\",,,,,,\n肉桂葉 Cinnamon Leaf,,,,,,\n香茅 Citronella,,,,,,\n快樂鼠尾草,,,,,,\n芫荽籽 Coriander,,,,,,\n絲柏 Cypress,,,,,,\n欖香脂 Elemi,,,,,,\n兩種尤加利精油,,,,,,\n\"藍膠尤加利 Eucalyptus, Blue\",,,,,,\n\"檸檬尤加利 Eucalyptus, Lemon\",,,,,,\n\"甜茴香 Fennel, Sweet\",,,,,,\n冷杉 Fir Needle,,,,,,\n天竺葵 Geranium,,,,,,\n生薑 Ginger,,,,,,\n葡萄柚 Grapefruit,,,,,,\n永久花 Helichrysum,,,,,,\n牛膝草 Hyssop,,,,,,\n杜松漿果 Juniper Berry,,,,,,\n薰衣草 Lavender,,,,,,\n檸檬 Lemon,,,,,,\n香蜂草 Lemon Balm,,,,,,\n\"東印度檸檬草 Lemongrass, East Indian\",,,,,,\n\"西印度檸檬草 Lemongrass, West Indian\",,,,,,\n萊姆 Lime,,,,,,\n柑橘 Mandarin,,,,,,\n松紅梅 Manuka,,,,,,\n甜馬鬱蘭 Marjoram,,,,,,\n兩種薄荷精油,,,,,,\n綠薄荷 Spearmint,,,,,,\n沒藥 Myrrh,,,,,,\n綠花白千層 Niaouli,,,,,,\n柑橘類精油,,,,,,\n橙花 Neroli,,,,,,\n甜橙 Orange,,,,,,\n玫瑰草 Palmarosa,,,,,,\n羅文莎葉 Ravintsara,,,,,,\n玫瑰 Rose,,,,,,\n迷迭香 Rosemary,,,,,,\n快樂鼠尾草 Clary Sage,,,,,,\n西班牙鼠尾草 Spanish Sage,,,,,,\n茶樹 Tea Tree,,,,,,\n百里香 Thyme,,,,,,\n伊蘭伊蘭 Ylang-Ylang,,,,,,\n甜杏仁油,\"Almond, Sweet\",基底油,,,,\n杏桃核仁油,Apricot,基底油,,,,\n酪梨油,Avocado,基底油,,,,\n琉璃苣油,Borage,基底油,,,,\n椰子油 Coconut,,基底油,,,,\n月見草油 Evening Primrose,,基底油,,,,\n榛果油 Hazelnut,,基底油,,,,\n橄欖油 Olive,,基底油,,,,\n玫瑰果油 Rosehip Seed,,基底油,,,,\n芝麻油 Sesame,,基底油,,,,\n葵花油 Sunflower,,基底油,,,,\n浸泡油,,基底油,,,,\n金盞花油 Calendula,,基底油,,,,";
+let recipes = [];
 
-  <script>
-    // GitHub Pages 使用：請把 Potions-Formula.csv 放在 index.html 同一層。
-    // 若本機直接雙擊 HTML，瀏覽器通常會阻擋讀取外部 CSV，因此下方有內建備用資料，避免預覽時壞掉。
-    const CSV_PATH = './Potions-Formula.csv';
-    const FALLBACK_CSV = `原料名稱,英文名稱,類型,財富藥膏,驅邪藥膏,無毒飛天藥膏#2,"《房間之主》
-語氣膏"
-,,,,,,
-蜜蠟,,藥膏基底,5g,5g,5g,5g
-荷荷巴油,Jojoba,基底油,20ml,20ml,20ml,20ml
-羅勒,Basil,精油,1,,,
-丁香,Clove,精油,1,1,,
-廣藿香,Patchouli,精油,4,,,
-岩蘭草,Vetiver,精油,"3
-(橡木苔特調配方)",,,5
-肉桂,Cinnamon,精油,"3
-(橡木苔特調配方)",,,
-橡木苔,Oakmoss,精油,3,,,
-檀香,Sandalwood,精油,,,2,
-茉莉,Jasmine,精油,,,1,
-安息香,,精油,,,1,
-肉豆蔻皮,Mace,精油,,,1,
-乳香,Frankincense,精油,,3,,
-胡椒薄荷,Peppermint,精油,,2,,
-松樹,Pine,精油,,1,,
-龍延香,Ambergris oil,精油,,,,
-羅馬洋甘菊,"Chamomile, Roman",,,,,3
-檸檬馬鞭草,,,,,,"5
-(或)"
-苦橙葉,Petitgrain,,,,,"5
-(或)"
-西印度檀香 Amyris,,精油,,,,
-歐白芷 Angelica,,精油,,,,
-大茴香籽 Anise Seed,,精油,,,,
-月桂 Bay Laurel,,精油,,,,
-佛手柑 Bergamot,,精油,,,,
-黑胡椒 Black Pepper,,精油,,,,
-白千層 Cajeput,,精油,,,,
-藏茴香 Caraway Seed,,精油,,,,
-小荳蔻 Cardamom,,精油,,,,
-野胡蘿蔔籽 Carrot Seed,,精油,,,,
-兩種雪松精油,,,,,,
-"大西洋雪松 Cedarwood, Atlas",,,,,,
-"維吉尼亞雪松 Cedarwood, Virginia",,,,,,
-兩種洋甘菊精油,,,,,,
-"德國洋甘菊 Chamomile, German",,,,,,
-肉桂葉 Cinnamon Leaf,,,,,,
-香茅 Citronella,,,,,,
-快樂鼠尾草,,,,,,
-芫荽籽 Coriander,,,,,,
-絲柏 Cypress,,,,,,
-欖香脂 Elemi,,,,,,
-兩種尤加利精油,,,,,,
-"藍膠尤加利 Eucalyptus, Blue",,,,,,
-"檸檬尤加利 Eucalyptus, Lemon",,,,,,
-"甜茴香 Fennel, Sweet",,,,,,
-冷杉 Fir Needle,,,,,,
-天竺葵 Geranium,,,,,,
-生薑 Ginger,,,,,,
-葡萄柚 Grapefruit,,,,,,
-永久花 Helichrysum,,,,,,
-牛膝草 Hyssop,,,,,,
-杜松漿果 Juniper Berry,,,,,,
-薰衣草 Lavender,,,,,,
-檸檬 Lemon,,,,,,
-香蜂草 Lemon Balm,,,,,,
-"東印度檸檬草 Lemongrass, East Indian",,,,,,
-"西印度檸檬草 Lemongrass, West Indian",,,,,,
-萊姆 Lime,,,,,,
-柑橘 Mandarin,,,,,,
-松紅梅 Manuka,,,,,,
-甜馬鬱蘭 Marjoram,,,,,,
-兩種薄荷精油,,,,,,
-綠薄荷 Spearmint,,,,,,
-沒藥 Myrrh,,,,,,
-綠花白千層 Niaouli,,,,,,
-柑橘類精油,,,,,,
-橙花 Neroli,,,,,,
-甜橙 Orange,,,,,,
-玫瑰草 Palmarosa,,,,,,
-羅文莎葉 Ravintsara,,,,,,
-玫瑰 Rose,,,,,,
-迷迭香 Rosemary,,,,,,
-快樂鼠尾草 Clary Sage,,,,,,
-西班牙鼠尾草 Spanish Sage,,,,,,
-茶樹 Tea Tree,,,,,,
-百里香 Thyme,,,,,,
-伊蘭伊蘭 Ylang-Ylang,,,,,,
-甜杏仁油,"Almond, Sweet",基底油,,,,
-杏桃核仁油,Apricot,基底油,,,,
-酪梨油,Avocado,基底油,,,,
-琉璃苣油,Borage,基底油,,,,
-椰子油 Coconut,,基底油,,,,
-月見草油 Evening Primrose,,基底油,,,,
-榛果油 Hazelnut,,基底油,,,,
-橄欖油 Olive,,基底油,,,,
-玫瑰果油 Rosehip Seed,,基底油,,,,
-芝麻油 Sesame,,基底油,,,,
-葵花油 Sunflower,,基底油,,,,
-浸泡油,,基底油,,,,
-金盞花油 Calendula,,基底油,,,,`;
+const el = {
+  keyword: document.getElementById('keyword'),
+  searchBtn: document.getElementById('searchBtn'),
+  clearBtn: document.getElementById('clearBtn'),
+  result: document.getElementById('result'),
+  meta: document.getElementById('meta')
+};
 
-    let recipes = [];
+function escapeHTML(value) {
+  return String(value ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#039;');
+}
 
-    const searchInput = document.getElementById('searchInput');
-    const searchBtn = document.getElementById('searchBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const meta = document.getElementById('meta');
-    const message = document.getElementById('message');
-    const results = document.getElementById('results');
+function normalize(value) {
+  return String(value ?? '').toLowerCase().replace(/\s+/g, '').trim();
+}
 
-    function normalize(value) {
-      return String(value || '')
-        .toLowerCase()
-        .replace(/\s+/g, '')
-        .replace(/[，,、。．.｜|／/()（）「」『』《》#＃\-—_]/g, '');
-    }
-
-    function escapeHTML(value) {
-      return String(value || '')
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-    }
-
-    function showMessage(text, isError = false) {
-      message.style.display = 'block';
-      message.className = isError ? 'message error' : 'message';
-      message.textContent = text;
-    }
-
-    function hideMessage() {
-      message.style.display = 'none';
-      message.textContent = '';
-    }
-
-    function parseCSV(text) {
-      const rows = [];
-      let row = [];
-      let cell = '';
-      let inQuotes = false;
-
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const next = text[i + 1];
-
-        if (char === '"' && inQuotes && next === '"') {
-          cell += '"';
-          i++;
-        } else if (char === '"') {
-          inQuotes = !inQuotes;
-        } else if (char === ',' && !inQuotes) {
-          row.push(cell.trim());
-          cell = '';
-        } else if ((char === '
-' || char === '') && !inQuotes) {
-          if (char === '' && next === '
+function parseCSV(text) {
+  const rows = [];
+  let row = [], cell = '', quote = false;
+  text = String(text || '').replace(/^﻿/, '');
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i], n = text[i + 1];
+    if (c === '"' && quote && n === '"') { cell += '"'; i++; }
+    else if (c === '"') { quote = !quote; }
+    else if (c === ',' && !quote) { row.push(cell.trim()); cell = ''; }
+    else if ((c === '
+' || c === '') && !quote) {
+      if (c === '' && n === '
 ') i++;
-          row.push(cell.trim());
-          if (row.some(item => item !== '')) rows.push(row);
-          row = [];
-          cell = '';
-        } else {
-          cell += char;
-        }
-      }
-
       row.push(cell.trim());
-      if (row.some(item => item !== '')) rows.push(row);
-      return rows;
-    }
+      if (row.some(x => x !== '')) rows.push(row);
+      row = []; cell = '';
+    } else { cell += c; }
+  }
+  row.push(cell.trim());
+  if (row.some(x => x !== '')) rows.push(row);
+  return rows;
+}
 
-    function buildRecipesFromWideCSV(csvText) {
-      const rows = parseCSV(csvText);
-      if (rows.length < 2) return [];
+function buildRecipes(csvText) {
+  const rows = parseCSV(csvText);
+  if (rows.length < 2) return [];
+  const header = rows[0];
+  const recipeHeaders = header.slice(3).map(h => h.trim()).filter(Boolean);
+  return recipeHeaders.map((recipeName, recipeOffset) => {
+    const colIndex = recipeOffset + 3;
+    const ingredients = rows.slice(1).map(r => {
+      const amount = (r[colIndex] || '').trim();
+      if (!amount) return null;
+      return {
+        name: (r[0] || '').trim(),
+        english: (r[1] || '').trim(),
+        type: (r[2] || '').trim(),
+        amount
+      };
+    }).filter(Boolean);
+    return { name: recipeName, ingredients };
+  }).filter(r => r.name && r.ingredients.length);
+}
 
-      const header = rows[0].map(item => item.trim());
-      const recipeNames = header.slice(3).filter(Boolean);
-      const recipeList = recipeNames.map(name => ({ name, ingredients: [] }));
+async function loadRecipes() {
+  let text = BACKUP_CSV;
+  try {
+    // 放在 GitHub Pages 時，會優先讀取同資料夾最新 CSV。
+    const response = await fetch(`${CSV_FILE}?v=${Date.now()}`, { cache: 'no-store' });
+    if (response.ok) text = await response.text();
+  } catch (e) {
+    // 本機直接開 HTML 時，fetch 可能被瀏覽器擋下；此時使用內建備用資料，畫面仍可使用。
+  }
 
-      rows.slice(1).forEach(row => {
-        const ingredientName = (row[0] || '').trim();
-        const englishName = (row[1] || '').trim();
-        const type = (row[2] || '').trim();
-        if (!ingredientName) return;
+  recipes = buildRecipes(text);
+  const ingredientCount = new Set(recipes.flatMap(r => r.ingredients.map(i => normalize(i.name)))).size;
+  el.meta.textContent = recipes.length
+    ? `已收錄 ${recipes.length} 款精油膏、${ingredientCount} 筆原料。`
+    : '目前沒有讀取到配方資料。';
+  renderEmpty();
+}
 
-        recipeNames.forEach((recipeName, index) => {
-          const amount = (row[index + 3] || '').trim();
-          if (!amount) return;
+function highlight(text, keyword) {
+  const raw = String(text ?? '');
+  const key = String(keyword ?? '').trim();
+  if (!key) return escapeHTML(raw);
+  const safe = key.replace(/[.*+?^${}()|[\]\]/g, '\$&');
+  return escapeHTML(raw).replace(new RegExp(`(${safe})`, 'gi'), '<mark>$1</mark>');
+}
 
-          recipeList[index].ingredients.push({
-            name: ingredientName,
-            englishName,
-            type,
-            amount
-          });
-        });
-      });
+function search() {
+  const keyword = el.keyword.value.trim();
+  if (!keyword) {
+    renderNotice('請先輸入想搜尋的精油膏名稱或成分名稱，例如：財富、檀香、蜜蠟。');
+    return;
+  }
 
-      return recipeList.filter(recipe => recipe.ingredients.length > 0);
-    }
+  const q = normalize(keyword);
+  const matched = recipes.filter(recipe => {
+    if (normalize(recipe.name).includes(q)) return true;
+    return recipe.ingredients.some(i =>
+      normalize(i.name).includes(q) ||
+      normalize(i.english).includes(q) ||
+      normalize(i.type).includes(q)
+    );
+  });
 
-    async function loadRecipes() {
-      let csvText = '';
+  if (!matched.length) {
+    renderNotice(`目前找不到與「${escapeHTML(keyword)}」相關的精油膏。可以改用較短的名稱搜尋，例如「檀香」或「財富」。`);
+    return;
+  }
 
-      try {
-        const response = await fetch(`${CSV_PATH}?v=${Date.now()}`, { cache: 'no-store' });
-        if (!response.ok) throw new Error('CSV not found');
-        csvText = await response.text();
-      } catch (error) {
-        // 本機直接開 HTML 時，fetch 會失敗；此時使用內建備用資料，避免畫面壞掉。
-        csvText = FALLBACK_CSV;
-      }
+  el.result.innerHTML = matched.map(recipe => renderCard(recipe, keyword)).join('');
+}
 
-      recipes = buildRecipesFromWideCSV(csvText);
+function renderCard(recipe, keyword) {
+  const matchedIngredients = recipe.ingredients.filter(i =>
+    normalize(i.name).includes(normalize(keyword)) ||
+    normalize(i.english).includes(normalize(keyword)) ||
+    normalize(i.type).includes(normalize(keyword))
+  );
 
-      if (!recipes.length) {
-        meta.textContent = '配方書尚未準備完成。';
-        showMessage('目前讀不到可使用的配方資料，請確認配方表格式是否正確。', true);
-        renderEmpty('目前無法搜尋，因為配方資料尚未成功讀取。');
-        return;
-      }
+  const badges = matchedIngredients.length
+    ? `<div class="badge-row">${matchedIngredients.map(i => `<span class="badge">符合：${escapeHTML(i.name)}</span>`).join('')}</div>`
+    : '';
 
-      const ingredientCount = new Set(
-        recipes.flatMap(recipe => recipe.ingredients.map(item => normalize(item.name)))
-      ).size;
+  return `
+    <article class="card">
+      <h3>${highlight(recipe.name, keyword)}</h3>
+      ${badges}
+      <ul class="list">
+        ${recipe.ingredients.map(i => `
+          <li>
+            <div>
+              <div class="name">${highlight(i.name, keyword)}</div>
+              ${i.english ? `<div class="en">${highlight(i.english, keyword)}</div>` : ''}
+            </div>
+            <div class="type">${escapeHTML(i.type)}</div>
+            <div class="amount">${escapeHTML(i.amount)}</div>
+          </li>
+        `).join('')}
+      </ul>
+    </article>
+  `;
+}
 
-      meta.textContent = `已收錄 ${recipes.length} 款精油膏、${ingredientCount} 筆原料`;
-      hideMessage();
-      renderEmpty(`可以搜尋：${recipes.map(item => item.name).join('、')}，或輸入任一成分名稱。`);
-    }
+function renderNotice(message) {
+  el.result.innerHTML = `<div class="notice">${message}</div>`;
+}
 
-    function searchRecipes() {
-      const keyword = searchInput.value.trim();
-      hideMessage();
+function renderEmpty() {
+  if (!recipes.length) {
+    renderNotice('目前沒有讀取到配方資料，請確認 CSV 檔案是否與網頁放在同一個資料夾。');
+    return;
+  }
+  renderNotice(`可以搜尋：${recipes.map(r => escapeHTML(r.name)).join('、')}，或輸入任一成分名稱。`);
+}
 
-      if (!recipes.length) {
-        showMessage('配方書還沒準備好，請稍後再試一次。', true);
-        return;
-      }
-
-      if (!keyword) {
-        showMessage('請先輸入想查詢的精油膏名稱或成分名稱。');
-        searchInput.focus();
-        return;
-      }
-
-      const key = normalize(keyword);
-      const matched = recipes.filter(recipe => {
-        const recipeNameMatched = normalize(recipe.name).includes(key);
-        const ingredientMatched = recipe.ingredients.some(item =>
-          normalize(item.name).includes(key) ||
-          normalize(item.englishName).includes(key) ||
-          normalize(item.type).includes(key)
-        );
-        return recipeNameMatched || ingredientMatched;
-      });
-
-      if (!matched.length) {
-        renderEmpty(`目前找不到與「${escapeHTML(keyword)}」相關的精油膏。可以改用精油膏名稱、中文成分名稱或英文成分名稱搜尋。`);
-        return;
-      }
-
-      renderRecipes(matched, keyword);
-    }
-
-    function renderRecipes(recipeList, keyword) {
-      results.innerHTML = recipeList.map(recipe => `
-        <article class="card">
-          <h3>${highlight(recipe.name, keyword)}</h3>
-          <div class="tags">
-            ${recipe.ingredients.slice(0, 6).map(item => `<span class="tag">${escapeHTML(item.type || '原料')}</span>`).join('')}
-          </div>
-          <ul class="ingredient-list">
-            ${recipe.ingredients.map(item => `
-              <li>
-                <span class="ingredient-name">
-                  ${highlight(item.name, keyword)}
-                  ${item.englishName ? `<small>${highlight(item.englishName, keyword)}</small>` : ''}
-                </span>
-                <span class="amount">${escapeHTML(item.amount)}</span>
-              </li>
-            `).join('')}
-          </ul>
-        </article>
-      `).join('');
-    }
-
-    function highlight(text, keyword) {
-      const safeText = escapeHTML(text);
-      if (!keyword) return safeText;
-      const trimmed = keyword.trim();
-      if (!trimmed) return safeText;
-
-      // 為了避免特殊符號造成正規表示式錯誤，先跳脫查詢字串。
-      const escapedKeyword = trimmed.replace(/[.*+?^${}()|[\]\]/g, '\$&');
-      try {
-        return safeText.replace(new RegExp(escapedKeyword, 'gi'), match => `<mark>${match}</mark>`);
-      } catch (error) {
-        return safeText;
-      }
-    }
-
-    function renderEmpty(text) {
-      results.innerHTML = `<div class="empty">${text}</div>`;
-    }
-
-    searchBtn.addEventListener('click', searchRecipes);
-    clearBtn.addEventListener('click', () => {
-      searchInput.value = '';
-      hideMessage();
-      renderEmpty(`可以搜尋：${recipes.map(item => item.name).join('、')}，或輸入任一成分名稱。`);
-      searchInput.focus();
-    });
-    searchInput.addEventListener('keydown', event => {
-      if (event.key === 'Enter') searchRecipes();
-    });
-
-    loadRecipes();
-  </script>
+el.searchBtn.addEventListener('click', search);
+el.keyword.addEventListener('keydown', e => { if (e.key === 'Enter') search(); });
+el.clearBtn.addEventListener('click', () => { el.keyword.value = ''; renderEmpty(); el.keyword.focus(); });
+loadRecipes();
+</script>
 </body>
 </html>
