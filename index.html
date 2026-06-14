@@ -1,235 +1,443 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>女巫精油膏配方書</title>
-<style>
-  * { box-sizing: border-box; }
-  body { margin:0; font-family:"Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:#f8f0df; background: radial-gradient(circle at 10% 0%, rgba(93,40,111,.45), transparent 28%), radial-gradient(circle at 88% 18%, rgba(36,95,72,.34), transparent 30%), #0f0b18; min-height:100vh; }
-  .wrap { width:min(1100px, 100%); margin:0 auto; padding:28px 18px 56px; }
-  .hero, .panel, .notice, .card { border:1px solid rgba(230,210,165,.18); background:rgba(255,255,255,.07); box-shadow:0 22px 55px rgba(0,0,0,.24); backdrop-filter: blur(12px); }
-  .hero { border-radius:28px; padding:34px 26px; background:linear-gradient(135deg, rgba(47,38,78,.88), rgba(20,54,43,.82)); position:relative; overflow:hidden; }
-  .hero:after { content:"✦"; position:absolute; right:32px; top:26px; color:rgba(232,217,165,.34); font-size:72px; }
-  .eyebrow { color:#e6cd8a; font-weight:800; letter-spacing:.1em; font-size:13px; margin-bottom:10px; }
-  h1 { margin:0; font-size:clamp(36px,6vw,58px); letter-spacing:.03em; line-height:1.12; }
-  .subtitle { margin:14px 0 0; color:#d8cfc4; line-height:1.8; font-size:16px; max-width:720px; }
-  .panel { margin-top:22px; border-radius:24px; padding:22px; }
-  label { display:block; color:#ead491; font-weight:800; margin-bottom:10px; }
-  .search-row { display:flex; gap:12px; align-items:center; }
-  input { flex:1; min-width:0; border:1px solid rgba(230,210,165,.26); border-radius:18px; padding:15px 16px; background:#14101c; color:#fff; font-size:16px; outline:none; }
-  input:focus { border-color:#dfc879; box-shadow:0 0 0 4px rgba(223,200,121,.13); }
-  button { border:0; border-radius:999px; padding:14px 22px; font-weight:900; font-size:16px; cursor:pointer; white-space:nowrap; }
-  .primary { color:#17101c; background:linear-gradient(135deg, #eadb91, #a8cf8c); }
-  .secondary { color:#f4ead8; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.13); }
-  .meta { margin-top:12px; color:#bfb3a7; font-size:14px; line-height:1.7; }
-  h2 { color:#f0d88f; font-size:24px; margin:30px 0 16px; }
-  .notice { border-radius:22px; padding:20px 22px; color:#ded4c8; line-height:1.8; }
-  .results { display:grid; grid-template-columns:1fr; gap:16px; }
-  @media (min-width:760px) { .results { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
-  .card { border-radius:22px; padding:22px; }
-  .card h3 { margin:0 0 12px; color:#fff2bd; font-size:22px; }
-  .badge-row { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 16px; }
-  .badge { display:inline-flex; border-radius:999px; padding:6px 10px; background:rgba(159,204,134,.14); border:1px solid rgba(159,204,134,.24); color:#dbf6ce; font-size:13px; }
-  .list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
-  .list li { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:11px 12px; border-radius:14px; background:rgba(0,0,0,.2); }
-  .name { font-weight:800; }
-  .en { color:#aaa0a0; font-size:13px; }
-  .amount { color:#ead491; white-space:pre-line; text-align:right; }
-  .type { color:#c4b6cc; font-size:13px; text-align:right; }
-  mark { background:rgba(234,219,145,.28); color:#fff5c4; padding:0 .14em; border-radius:4px; }
-  @media (max-width:640px) { .search-row { flex-direction:column; align-items:stretch; } button { width:100%; } .hero { padding:28px 22px; } .list li { grid-template-columns:1fr; } .amount,.type { text-align:left; } }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>女巫精油膏配方書</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #100d17;
+      --card: rgba(255,255,255,.08);
+      --card-strong: rgba(255,255,255,.12);
+      --line: rgba(235, 217, 168, .2);
+      --gold: #e6cf91;
+      --green: #9cc98f;
+      --text: #fff8eb;
+      --muted: #cfc3b2;
+      --danger: #ffd0d0;
+      --danger-bg: rgba(198, 77, 77, .16);
+    }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(133, 96, 196, .26), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(139, 184, 117, .18), transparent 28%),
+        linear-gradient(180deg, #171123, var(--bg));
+      min-height: 100vh;
+    }
+    .wrap { width: min(1080px, 100%); margin: 0 auto; padding: 28px 18px 56px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 34px 24px;
+      background: linear-gradient(135deg, rgba(50,39,77,.92), rgba(20,43,34,.9));
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 80px rgba(0,0,0,.34);
+    }
+    .hero:after {
+      content: "✦";
+      position: absolute;
+      right: 24px;
+      top: 18px;
+      font-size: 82px;
+      color: rgba(230, 207, 145, .32);
+    }
+    .eyebrow { color: var(--gold); font-size: 14px; letter-spacing: .08em; font-weight: 700; }
+    h1 { margin: 10px 0 10px; font-size: clamp(32px, 6vw, 54px); line-height: 1.1; }
+    .hero p { margin: 0; max-width: 760px; color: var(--muted); line-height: 1.8; font-size: 16px; }
+    .panel {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+    }
+    .search-row { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 740px) { .search-row { grid-template-columns: 1fr auto auto; } }
+    label { display: block; margin-bottom: 10px; color: var(--gold); font-weight: 800; }
+    input {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(230,207,145,.32);
+      background: rgba(0,0,0,.28);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+    input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(230,207,145,.12); }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .primary { background: linear-gradient(135deg, var(--gold), var(--green)); color: #171123; }
+    .secondary { background: rgba(255,255,255,.12); color: var(--text); border: 1px solid rgba(255,255,255,.14); }
+    .meta { margin-top: 12px; color: #bdb2a2; font-size: 14px; line-height: 1.7; }
+    .status {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      line-height: 1.7;
+      display: none;
+    }
+    .status.show { display: block; }
+    .status.info { color: #f2dfb1; background: rgba(230,207,145,.12); border: 1px solid rgba(230,207,145,.24); }
+    .status.error { color: var(--danger); background: var(--danger-bg); border: 1px solid rgba(198,77,77,.34); }
+    .status.success { display: none; }
+    .section-title { margin: 30px 0 14px; font-size: 22px; color: var(--gold); }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    .card {
+      padding: 20px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, var(--card-strong), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.13);
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    }
+    .card h3 { margin: 0 0 12px; color: #fff2c7; font-size: 22px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+    .tag {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(156,201,143,.15);
+      border: 1px solid rgba(156,201,143,.24);
+      color: #dff7d9;
+      font-size: 13px;
+    }
+    .ingredients { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .ingredients li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 10px 12px;
+      border-radius: 15px;
+      background: rgba(0,0,0,.22);
+    }
+    .ingredient-main { display: flex; flex-direction: column; gap: 2px; }
+    .zh { font-weight: 800; }
+    .en, .type { color: #bfb4a6; font-size: 13px; }
+    .amount { color: var(--gold); text-align: right; white-space: pre-line; font-weight: 800; }
+    .empty {
+      padding: 24px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    mark { background: rgba(230,207,145,.28); color: inherit; border-radius: 5px; padding: 0 2px; }
+    .small-note { color: #a99e91; font-size: 13px; line-height: 1.7; margin-top: 20px; }
+    code { color: #f4d990; }
+  </style>
 </head>
 <body>
-<main class="wrap">
-  <section class="hero">
-    <div class="eyebrow">🌿 WITCH BALM FORMULA BOOK</div>
-    <h1>女巫精油膏配方書</h1>
-    <p class="subtitle">輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。</p>
-  </section>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">🌿 WITCH BALM FORMULA BOOK</div>
+      <h1>女巫精油膏配方書</h1>
+      <p>輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。</p>
+    </section>
 
-  <section class="panel">
-    <label for="keyword">搜尋精油膏名稱或成分名稱</label>
-    <div class="search-row">
-      <input id="keyword" type="search" placeholder="例如：財富、檀香、Sandalwood、蜜蠟、荷荷巴油" autocomplete="off" />
-      <button class="primary" id="searchBtn">搜尋</button>
-      <button class="secondary" id="clearBtn">清除</button>
-    </div>
-    <div class="meta" id="meta">配方資料載入中...</div>
-  </section>
+    <section class="panel">
+      <label for="searchInput">搜尋精油膏名稱或成分名稱</label>
+      <div class="search-row">
+        <input id="searchInput" type="text" placeholder="例如：財富、檀香、Sandalwood、蜜蠟、荷荷巴油" autocomplete="off" />
+        <button id="searchBtn" class="primary">搜尋</button>
+        <button id="clearBtn" class="secondary">清除</button>
+      </div>
+      <div class="meta" id="dataMeta">正在讀取配方資料...</div>
+      <div class="status" id="statusBox"></div>
+    </section>
 
-  <h2>🔮 查詢結果</h2>
-  <section id="result" class="results"></section>
-</main>
-<script>
-const CSV_FILE = 'Potions-Formula.csv';
-const BACKUP_CSV = "原料名稱,英文名稱,類型,財富藥膏,驅邪藥膏,無毒飛天藥膏#2,\"《房間之主》\n語氣膏\"\n,,,,,,\n蜜蠟,,藥膏基底,5g,5g,5g,5g\n荷荷巴油,Jojoba,基底油,20ml,20ml,20ml,20ml\n羅勒,Basil,精油,1,,,\n丁香,Clove,精油,1,1,,\n廣藿香,Patchouli,精油,4,,,\n岩蘭草,Vetiver,精油,\"3\n(橡木苔特調配方)\",,,5\n肉桂,Cinnamon,精油,\"3\n(橡木苔特調配方)\",,,\n橡木苔,Oakmoss,精油,3,,,\n檀香,Sandalwood,精油,,,2,\n茉莉,Jasmine,精油,,,1,\n安息香,,精油,,,1,\n肉豆蔻皮,Mace,精油,,,1,\n乳香,Frankincense,精油,,3,,\n胡椒薄荷,Peppermint,精油,,2,,\n松樹,Pine,精油,,1,,\n龍延香,Ambergris oil,精油,,,,\n羅馬洋甘菊,\"Chamomile, Roman\",,,,,3\n檸檬馬鞭草,,,,,,\"5\n(或)\"\n苦橙葉,Petitgrain,,,,,\"5\n(或)\"\n西印度檀香 Amyris,,精油,,,,\n歐白芷 Angelica,,精油,,,,\n大茴香籽 Anise Seed,,精油,,,,\n月桂 Bay Laurel,,精油,,,,\n佛手柑 Bergamot,,精油,,,,\n黑胡椒 Black Pepper,,精油,,,,\n白千層 Cajeput,,精油,,,,\n藏茴香 Caraway Seed,,精油,,,,\n小荳蔻 Cardamom,,精油,,,,\n野胡蘿蔔籽 Carrot Seed,,精油,,,,\n兩種雪松精油,,,,,,\n\"大西洋雪松 Cedarwood, Atlas\",,,,,,\n\"維吉尼亞雪松 Cedarwood, Virginia\",,,,,,\n兩種洋甘菊精油,,,,,,\n\"德國洋甘菊 Chamomile, German\",,,,,,\n肉桂葉 Cinnamon Leaf,,,,,,\n香茅 Citronella,,,,,,\n快樂鼠尾草,,,,,,\n芫荽籽 Coriander,,,,,,\n絲柏 Cypress,,,,,,\n欖香脂 Elemi,,,,,,\n兩種尤加利精油,,,,,,\n\"藍膠尤加利 Eucalyptus, Blue\",,,,,,\n\"檸檬尤加利 Eucalyptus, Lemon\",,,,,,\n\"甜茴香 Fennel, Sweet\",,,,,,\n冷杉 Fir Needle,,,,,,\n天竺葵 Geranium,,,,,,\n生薑 Ginger,,,,,,\n葡萄柚 Grapefruit,,,,,,\n永久花 Helichrysum,,,,,,\n牛膝草 Hyssop,,,,,,\n杜松漿果 Juniper Berry,,,,,,\n薰衣草 Lavender,,,,,,\n檸檬 Lemon,,,,,,\n香蜂草 Lemon Balm,,,,,,\n\"東印度檸檬草 Lemongrass, East Indian\",,,,,,\n\"西印度檸檬草 Lemongrass, West Indian\",,,,,,\n萊姆 Lime,,,,,,\n柑橘 Mandarin,,,,,,\n松紅梅 Manuka,,,,,,\n甜馬鬱蘭 Marjoram,,,,,,\n兩種薄荷精油,,,,,,\n綠薄荷 Spearmint,,,,,,\n沒藥 Myrrh,,,,,,\n綠花白千層 Niaouli,,,,,,\n柑橘類精油,,,,,,\n橙花 Neroli,,,,,,\n甜橙 Orange,,,,,,\n玫瑰草 Palmarosa,,,,,,\n羅文莎葉 Ravintsara,,,,,,\n玫瑰 Rose,,,,,,\n迷迭香 Rosemary,,,,,,\n快樂鼠尾草 Clary Sage,,,,,,\n西班牙鼠尾草 Spanish Sage,,,,,,\n茶樹 Tea Tree,,,,,,\n百里香 Thyme,,,,,,\n伊蘭伊蘭 Ylang-Ylang,,,,,,\n甜杏仁油,\"Almond, Sweet\",基底油,,,,\n杏桃核仁油,Apricot,基底油,,,,\n酪梨油,Avocado,基底油,,,,\n琉璃苣油,Borage,基底油,,,,\n椰子油 Coconut,,基底油,,,,\n月見草油 Evening Primrose,,基底油,,,,\n榛果油 Hazelnut,,基底油,,,,\n橄欖油 Olive,,基底油,,,,\n玫瑰果油 Rosehip Seed,,基底油,,,,\n芝麻油 Sesame,,基底油,,,,\n葵花油 Sunflower,,基底油,,,,\n浸泡油,,基底油,,,,\n金盞花油 Calendula,,基底油,,,,";
-let recipes = [];
+    <h2 class="section-title">🔮 查詢結果</h2>
+    <section id="results" class="grid"></section>
+    <section id="emptyState" class="empty">配方讀取完成後，可以直接輸入「精油膏名稱」或「成分名稱」查詢。</section>
 
-const el = {
-  keyword: document.getElementById('keyword'),
-  searchBtn: document.getElementById('searchBtn'),
-  clearBtn: document.getElementById('clearBtn'),
-  result: document.getElementById('result'),
-  meta: document.getElementById('meta')
-};
+  </main>
 
-function escapeHTML(value) {
-  return String(value ?? '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'",'&#039;');
-}
+  <script>
+    /* ============================================================
+      設定區：配方資料檔名固定為 Potions-Formula.csv
+    ============================================================ */
+    const CSV_PATH = "./Potions-Formula.csv";
 
-function normalize(value) {
-  return String(value ?? '').toLowerCase().replace(/\s+/g, '').trim();
-}
+    let recipes = [];
+    let allIngredients = [];
 
-function parseCSV(text) {
-  const rows = [];
-  let row = [], cell = '', quote = false;
-  text = String(text || '').replace(/^﻿/, '');
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i], n = text[i + 1];
-    if (c === '"' && quote && n === '"') { cell += '"'; i++; }
-    else if (c === '"') { quote = !quote; }
-    else if (c === ',' && !quote) { row.push(cell.trim()); cell = ''; }
-    else if ((c === '
-' || c === '') && !quote) {
-      if (c === '' && n === '
-') i++;
-      row.push(cell.trim());
-      if (row.some(x => x !== '')) rows.push(row);
-      row = []; cell = '';
-    } else { cell += c; }
-  }
-  row.push(cell.trim());
-  if (row.some(x => x !== '')) rows.push(row);
-  return rows;
-}
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const statusBox = document.getElementById("statusBox");
+    const results = document.getElementById("results");
+    const emptyState = document.getElementById("emptyState");
+    const dataMeta = document.getElementById("dataMeta");
 
-function buildRecipes(csvText) {
-  const rows = parseCSV(csvText);
-  if (rows.length < 2) return [];
-  const header = rows[0];
-  const recipeHeaders = header.slice(3).map(h => h.trim()).filter(Boolean);
-  return recipeHeaders.map((recipeName, recipeOffset) => {
-    const colIndex = recipeOffset + 3;
-    const ingredients = rows.slice(1).map(r => {
-      const amount = (r[colIndex] || '').trim();
-      if (!amount) return null;
+    document.addEventListener("DOMContentLoaded", loadCsvData);
+    searchBtn.addEventListener("click", handleSearch);
+    clearBtn.addEventListener("click", clearSearch);
+    searchInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") handleSearch();
+    });
+
+    async function loadCsvData() {
+      try {
+        // 加上時間參數，降低 GitHub Pages 或瀏覽器快取造成 CSV 沒更新的機率。
+        const response = await fetch(`${CSV_PATH}?v=${Date.now()}`);
+        if (!response.ok) throw new Error(`讀取 CSV 失敗，狀態碼：${response.status}`);
+
+        const csvText = await response.text();
+        const rows = parseCSV(csvText);
+        const parsed = parseHorizontalFormulaTable(rows);
+
+        recipes = parsed.recipes;
+        allIngredients = parsed.allIngredients;
+
+        if (!recipes.length) throw new Error("CSV 內沒有讀到任何精油膏配方。請確認第 1 列是否有配方名稱。 ");
+
+        dataMeta.textContent = `已收錄 ${recipes.length} 款精油膏、${allIngredients.length} 筆原料。`;
+        showStatus("success", "");
+        renderEmpty(`可以搜尋：${recipes.slice(0, 4).map(r => r.name).join("、")}，或輸入任一成分名稱。`);
+      } catch (error) {
+        dataMeta.textContent = "配方資料尚未載入。";
+        showStatus("error", "配方資料暫時無法讀取，請稍後再試。");
+        renderEmpty("目前暫時無法搜尋，請稍後再試。");
+      }
+    }
+
+    function handleSearch() {
+      const keyword = searchInput.value.trim();
+      if (!keyword) {
+        showStatus("error", "請先輸入精油膏名稱或成分名稱，例如：財富、檀香、蜜蠟。");
+        return;
+      }
+      if (!recipes.length) {
+        showStatus("error", "配方資料還沒載入成功，請先確認 CSV 檔案是否存在。 ");
+        return;
+      }
+
+      const q = normalize(keyword);
+
+      const matched = recipes.filter(recipe => {
+        const recipeNameHit = normalize(recipe.name).includes(q);
+        const ingredientHit = recipe.ingredients.some(item => {
+          return normalize(item.nameZh).includes(q) ||
+                 normalize(item.nameEn).includes(q) ||
+                 normalize(item.type).includes(q);
+        });
+        return recipeNameHit || ingredientHit;
+      });
+
+      if (!matched.length) {
+        showStatus("info", `目前找不到與「${escapeHTML(keyword)}」相關的精油膏。`);
+        results.innerHTML = "";
+        renderEmpty("你可以改用較短的關鍵字，例如「檀香精油」改成「檀香」，或用英文名稱搜尋，例如 Sandalwood。");
+        return;
+      }
+
+      showStatus("success", `找到 ${matched.length} 款相關精油膏。`);
+      emptyState.style.display = "none";
+      renderRecipes(matched, keyword);
+    }
+
+    function clearSearch() {
+      searchInput.value = "";
+      results.innerHTML = "";
+      showStatus("success", "已清除搜尋結果。");
+      renderEmpty("請輸入精油膏名稱或成分名稱查詢。");
+    }
+
+    /* ============================================================
+      解析橫向配方表
+      CSV 格式預期：
+      原料名稱, 英文名稱, 類型, 財富藥膏, 驅邪藥膏, ...
+      蜜蠟, , 藥膏基底, 5g, 5g, ...
+      荷荷巴油, Jojoba, 基底油, 20ml, 20ml, ...
+    ============================================================ */
+    function parseHorizontalFormulaTable(rows) {
+      if (!rows || rows.length < 2) throw new Error("CSV 內容不足。 ");
+
+      const header = rows[0].map(cell => cleanCell(cell));
+      const recipeColumns = [];
+
+      header.forEach((title, index) => {
+        // 前三欄固定為原料資訊，第 4 欄開始視為配方名稱。
+        if (index >= 3 && title) {
+          recipeColumns.push({ index, name: title });
+        }
+      });
+
+      const recipeMap = recipeColumns.map(col => ({
+        name: col.name,
+        ingredients: []
+      }));
+
+      const ingredientRows = [];
+
+      rows.slice(1).forEach(row => {
+        const nameZh = cleanCell(row[0]);
+        const nameEn = cleanCell(row[1]);
+        const type = cleanCell(row[2]);
+
+        // 跳過完全空白列。
+        if (!nameZh && !nameEn && !type) return;
+
+        const ingredientBase = { nameZh, nameEn, type };
+        ingredientRows.push(ingredientBase);
+
+        recipeColumns.forEach((col, recipeIndex) => {
+          const rawAmount = cleanCell(row[col.index]);
+          if (!rawAmount) return;
+
+          recipeMap[recipeIndex].ingredients.push({
+            ...ingredientBase,
+            amount: formatAmount(rawAmount, type)
+          });
+        });
+      });
+
       return {
-        name: (r[0] || '').trim(),
-        english: (r[1] || '').trim(),
-        type: (r[2] || '').trim(),
-        amount
+        recipes: recipeMap.filter(recipe => recipe.ingredients.length > 0),
+        allIngredients: ingredientRows
       };
-    }).filter(Boolean);
-    return { name: recipeName, ingredients };
-  }).filter(r => r.name && r.ingredients.length);
-}
+    }
 
-async function loadRecipes() {
-  let text = BACKUP_CSV;
-  try {
-    // 放在 GitHub Pages 時，會優先讀取同資料夾最新 CSV。
-    const response = await fetch(`${CSV_FILE}?v=${Date.now()}`, { cache: 'no-store' });
-    if (response.ok) text = await response.text();
-  } catch (e) {
-    // 本機直接開 HTML 時，fetch 可能被瀏覽器擋下；此時使用內建備用資料，畫面仍可使用。
-  }
+    // 若精油欄位只填數字，預設補上「滴」。已有 g/ml/文字註記則維持原樣。
+    function formatAmount(value, type) {
+      const text = cleanCell(value);
+      const isOnlyNumber = /^\d+(\.\d+)?$/.test(text);
+      const isEssentialOil = normalize(type).includes("精油");
+      if (isOnlyNumber && isEssentialOil) return `${text}滴`;
+      return text;
+    }
 
-  recipes = buildRecipes(text);
-  const ingredientCount = new Set(recipes.flatMap(r => r.ingredients.map(i => normalize(i.name)))).size;
-  el.meta.textContent = recipes.length
-    ? `已收錄 ${recipes.length} 款精油膏、${ingredientCount} 筆原料。`
-    : '目前沒有讀取到配方資料。';
-  renderEmpty();
-}
+    /* ============================================================
+      CSV parser：支援雙引號、逗號、換行
+    ============================================================ */
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
 
-function highlight(text, keyword) {
-  const raw = String(text ?? '');
-  const key = String(keyword ?? '').trim();
-  if (!key) return escapeHTML(raw);
-  const safe = key.replace(/[.*+?^${}()|[\]\]/g, '\$&');
-  return escapeHTML(raw).replace(new RegExp(`(${safe})`, 'gi'), '<mark>$1</mark>');
-}
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
 
-function search() {
-  const keyword = el.keyword.value.trim();
-  if (!keyword) {
-    renderNotice('請先輸入想搜尋的精油膏名稱或成分名稱，例如：財富、檀香、蜜蠟。');
-    return;
-  }
+        if (char === '"' && inQuotes && next === '"') {
+          cell += '"';
+          i++;
+        } else if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === "," && !inQuotes) {
+          row.push(cell);
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") i++;
+          row.push(cell);
+          if (row.some(c => cleanCell(c) !== "")) rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += char;
+        }
+      }
 
-  const q = normalize(keyword);
-  const matched = recipes.filter(recipe => {
-    if (normalize(recipe.name).includes(q)) return true;
-    return recipe.ingredients.some(i =>
-      normalize(i.name).includes(q) ||
-      normalize(i.english).includes(q) ||
-      normalize(i.type).includes(q)
-    );
-  });
+      row.push(cell);
+      if (row.some(c => cleanCell(c) !== "")) rows.push(row);
+      return rows;
+    }
 
-  if (!matched.length) {
-    renderNotice(`目前找不到與「${escapeHTML(keyword)}」相關的精油膏。可以改用較短的名稱搜尋，例如「檀香」或「財富」。`);
-    return;
-  }
+    function renderRecipes(list, keyword) {
+      const q = normalize(keyword);
+      results.innerHTML = list.map(recipe => {
+        const ingredientItems = recipe.ingredients.map(item => {
+          const zh = highlight(item.nameZh || "未命名原料", q);
+          const en = item.nameEn ? `<span class="en">${highlight(item.nameEn, q)}</span>` : "";
+          const type = item.type ? `<span class="type">${highlight(item.type, q)}</span>` : "";
+          return `
+            <li>
+              <span class="ingredient-main">
+                <span class="zh">${zh}</span>
+                ${en}
+                ${type}
+              </span>
+              <span class="amount">${escapeHTML(item.amount)}</span>
+            </li>
+          `;
+        }).join("");
 
-  el.result.innerHTML = matched.map(recipe => renderCard(recipe, keyword)).join('');
-}
+        const matchedIngredients = recipe.ingredients.filter(item => {
+          return normalize(item.nameZh).includes(q) || normalize(item.nameEn).includes(q) || normalize(item.type).includes(q);
+        });
 
-function renderCard(recipe, keyword) {
-  const matchedIngredients = recipe.ingredients.filter(i =>
-    normalize(i.name).includes(normalize(keyword)) ||
-    normalize(i.english).includes(normalize(keyword)) ||
-    normalize(i.type).includes(normalize(keyword))
-  );
+        const tags = matchedIngredients.length
+          ? `<div class="tags">${matchedIngredients.slice(0, 6).map(item => `<span class="tag">含有：${escapeHTML(item.nameZh || item.nameEn)}</span>`).join("")}</div>`
+          : `<div class="tags"><span class="tag">配方名稱符合</span></div>`;
 
-  const badges = matchedIngredients.length
-    ? `<div class="badge-row">${matchedIngredients.map(i => `<span class="badge">符合：${escapeHTML(i.name)}</span>`).join('')}</div>`
-    : '';
+        return `
+          <article class="card">
+            <h3>${highlight(recipe.name, q)}</h3>
+            ${tags}
+            <ul class="ingredients">${ingredientItems}</ul>
+          </article>
+        `;
+      }).join("");
+    }
 
-  return `
-    <article class="card">
-      <h3>${highlight(recipe.name, keyword)}</h3>
-      ${badges}
-      <ul class="list">
-        ${recipe.ingredients.map(i => `
-          <li>
-            <div>
-              <div class="name">${highlight(i.name, keyword)}</div>
-              ${i.english ? `<div class="en">${highlight(i.english, keyword)}</div>` : ''}
-            </div>
-            <div class="type">${escapeHTML(i.type)}</div>
-            <div class="amount">${escapeHTML(i.amount)}</div>
-          </li>
-        `).join('')}
-      </ul>
-    </article>
-  `;
-}
+    function renderEmpty(message) {
+      emptyState.style.display = "block";
+      emptyState.innerHTML = message;
+    }
 
-function renderNotice(message) {
-  el.result.innerHTML = `<div class="notice">${message}</div>`;
-}
+    function showStatus(type, message) {
+      statusBox.className = `status show ${type}`;
+      statusBox.innerHTML = message;
+    }
 
-function renderEmpty() {
-  if (!recipes.length) {
-    renderNotice('目前沒有讀取到配方資料，請確認 CSV 檔案是否與網頁放在同一個資料夾。');
-    return;
-  }
-  renderNotice(`可以搜尋：${recipes.map(r => escapeHTML(r.name)).join('、')}，或輸入任一成分名稱。`);
-}
+    function cleanCell(value) {
+      return String(value ?? "").replace(/^\uFEFF/, "").trim();
+    }
 
-el.searchBtn.addEventListener('click', search);
-el.keyword.addEventListener('keydown', e => { if (e.key === 'Enter') search(); });
-el.clearBtn.addEventListener('click', () => { el.keyword.value = ''; renderEmpty(); el.keyword.focus(); });
-loadRecipes();
-</script>
+    function normalize(value) {
+      return cleanCell(value).toLowerCase().replace(/\s+/g, "");
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function highlight(text, normalizedKeyword) {
+      const safe = escapeHTML(text);
+      if (!normalizedKeyword) return safe;
+
+      // 中文/英文混合搜尋時，直接用原字串做寬鬆包含；為避免破壞 HTML，只在簡單情況標記。
+      const raw = cleanCell(text);
+      const rawLower = raw.toLowerCase();
+      const keyword = searchInput.value.trim().toLowerCase();
+
+      if (!keyword || !rawLower.includes(keyword)) return safe;
+
+      const start = rawLower.indexOf(keyword);
+      const end = start + keyword.length;
+      return `${escapeHTML(raw.slice(0, start))}<mark>${escapeHTML(raw.slice(start, end))}</mark>${escapeHTML(raw.slice(end))}`;
+    }
+  </script>
 </body>
 </html>
