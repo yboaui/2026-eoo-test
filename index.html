@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>女巫精油膏配方書</title>
+  <title>魔藥學精油膏配方書</title>
   <style>
     * { box-sizing: border-box; }
     :root {
@@ -93,7 +93,7 @@
     .status.show { display: block; }
     .status.info { color: #f2dfb1; background: rgba(230,207,145,.12); border: 1px solid rgba(230,207,145,.24); }
     .status.error { color: var(--danger); background: var(--danger-bg); border: 1px solid rgba(198,77,77,.34); }
-    .status.success { display: none; }
+    .status.success { color: #dff5d8; background: rgba(112,164,103,.15); border: 1px solid rgba(112,164,103,.32); }
     .section-title { margin: 30px 0 14px; font-size: 22px; color: var(--gold); }
     .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
@@ -137,6 +137,39 @@
       color: var(--muted);
       line-height: 1.8;
     }
+
+    .formula-list {
+      margin-top: 20px;
+      padding: 20px 24px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--line);
+    }
+    .formula-list h2 {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font-size: 22px;
+    }
+    .formula-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .formula-list button {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(230,207,145,.12);
+      border: 1px solid rgba(230,207,145,.26);
+      color: #f3d88f;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .formula-list button:hover {
+      background: rgba(230,207,145,.2);
+    }
     mark { background: rgba(230,207,145,.28); color: inherit; border-radius: 5px; padding: 0 2px; }
     .small-note { color: #a99e91; font-size: 13px; line-height: 1.7; margin-top: 20px; }
     code { color: #f4d990; }
@@ -146,7 +179,7 @@
   <main class="wrap">
     <section class="hero">
       <div class="eyebrow">🌿 WITCH BALM FORMULA BOOK</div>
-      <h1>女巫精油膏配方書</h1>
+      <h1>魔藥學精油膏配方書</h1>
       <p>輸入精油膏名稱或成分名稱，就能查詢可製作的精油膏與完整材料。</p>
     </section>
 
@@ -164,6 +197,11 @@
     <h2 class="section-title">🔮 查詢結果</h2>
     <section id="results" class="grid"></section>
     <section id="emptyState" class="empty">配方讀取完成後，可以直接輸入「精油膏名稱」或「成分名稱」查詢。</section>
+
+    <section class="formula-list" id="formulaListSection" hidden>
+      <h2>現有配方表</h2>
+      <ul id="formulaList"></ul>
+    </section>
 
   </main>
 
@@ -183,6 +221,8 @@
     const results = document.getElementById("results");
     const emptyState = document.getElementById("emptyState");
     const dataMeta = document.getElementById("dataMeta");
+    const formulaListSection = document.getElementById("formulaListSection");
+    const formulaList = document.getElementById("formulaList");
 
     document.addEventListener("DOMContentLoaded", loadCsvData);
     searchBtn.addEventListener("click", handleSearch);
@@ -207,6 +247,7 @@
         if (!recipes.length) throw new Error("CSV 內沒有讀到任何精油膏配方。請確認第 1 列是否有配方名稱。 ");
 
         dataMeta.textContent = `已收錄 ${recipes.length} 款精油膏、${allIngredients.length} 筆原料。`;
+        renderFormulaList();
         showStatus("success", "");
         renderEmpty(`可以搜尋：${recipes.slice(0, 4).map(r => r.name).join("、")}，或輸入任一成分名稱。`);
       } catch (error) {
@@ -357,6 +398,26 @@
       row.push(cell);
       if (row.some(c => cleanCell(c) !== "")) rows.push(row);
       return rows;
+    }
+
+
+    function renderFormulaList() {
+      if (!recipes.length) return;
+
+      formulaListSection.hidden = false;
+      formulaList.innerHTML = recipes.map(recipe => `
+        <li>
+          <button type="button" data-recipe-name="${escapeHTML(recipe.name)}">${escapeHTML(recipe.name)}</button>
+        </li>
+      `).join("");
+
+      formulaList.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", () => {
+          searchInput.value = button.dataset.recipeName;
+          handleSearch();
+          window.scrollTo({ top: results.offsetTop - 20, behavior: "smooth" });
+        });
+      });
     }
 
     function renderRecipes(list, keyword) {
